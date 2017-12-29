@@ -1,0 +1,12 @@
+/*! \defgroup redbook OpenGL Red Book Examples
+    \ingroup  examples
+
+    \image html redbook_cover.jpg The OpenGL Programming Guide - The Redbook
+
+    Links
+    - <a href="http://www.opengl.org/documentation/red_book_1.0/">OpenGL Programming Guide</a>
+    - <a href="http://www.gamedev.net/download/redbook.pdf">The OpenGL Redbook v1.1 PDF format</a>
+    - <a href="http://www.rush3d.com/reference/opengl-redbook-1.1/">The OpenGL Redbook v1.1 HTML format</a>
+*/
+
+

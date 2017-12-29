@@ -1,0 +1,29 @@
+See licence in files. Most of files have this licence:
+
+Copyright (c) Mark J. Kilgard, 199x.
+
+This program is freely distributable without licensing fees
+and is provided without guarantee or warrantee expressed or
+implied. This program is -not- in the public domain. 
+
+GtkGLUT make NO MODIFICATIONS of this file, so it should be OK to
+distribute it in base package.
+
+Tests which fail or don't work correctly:
+bigtest - Relay on reusing glut menu id, so "gfx modes" item doesn't work
+joytest - GtkGLUT don't have any support for joystick device
+overtest - GtkGLUT don't have support for overlays.
+test5  - GtkGLUT lack support of color indexed mode.
+test7 -  Behaviour may be somthing different than original GLUT, but mostly OK.
+test9  - GtkGLUT lack support of color indexed mode.
+test17 - GtkGLUT don't have support for overlays.
+test18 - GtkGLUT don't have support for overlays and all window operations are
+         executed immediately (no caching of hide/show/fullscreen/...).
+test19 - GtkGLUT relays on GTK+ which (may) send expose more times, than original glut do.
+         So display may be called more times than in original GLUT.
+test21 - Video resizing is not supported by GtkGLUT.
+test22 - GtkGLUT relays on GTK+ which (may) send expose more times, than original glut do.
+         This test is little misterious, because it fails in original GLUT too and GtkGLUT
+	 can do more stages of test, than original GLUT can do.
+test23 - Works, but glutInitDisplayString is really not fully supported.
+test25 - Font proportions are little different than in original GLUT.

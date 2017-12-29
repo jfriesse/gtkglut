@@ -1,0 +1,33 @@
+What you need
+=============
+- GNU variant of make
+- gcc
+- GTK+
+- GtkGLExt
+- pkg-config
+- doxygen (only for documentation, not really needed)
+
+Basic Installation
+==================
+
+There is no configure script, but don't be confused, Makefile is rather
+inteligent and use pkg-config for system differencies.
+
+If you run make, static and dynamic version of library is builded.
+
+With parameter "all", test programs are builded and staticaly linked too.
+
+You may set parameter PREFIX and DESTDIR with same meanings as in
+autotools generated makefiles.
+
+With parameter "install" base libraries are installed. If you want
+install documentation, please use "install-doc" (you need doxygen).
+
+If you want original GLUT compatibility library, please use
+make install-compat.
+
+THE HOPE
+========
+	
+Hope you find my work somehow useful.
+    Jan Friesse, <jfriesse@gmail.com>

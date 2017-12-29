@@ -1,0 +1,43 @@
+Windows 32 / Mingw Notes
+========================
+
+The "GtkGLUT" library installation package comes with Makefile, which is
+fully compatible with Mingw distributed in DevC++ 5 beta.
+
+
+**** Warning *****
+==================
+
+In this release, there is no support for installing libraries somewhere
+other, than c:, so please don't change any path in any installation
+(DevC++, Gtk+ and GtkGLExt)
+
+After some hacking (changing libraries path in DevC++ project or Makefile)
+you may get fully functional version, but this variant is NOT tested!
+
+
+Building the Libraries
+======================
+
+To build the "GtkGLUT" libraries, install contributed GTK+ libraries and
+DevC++. Than (maybe after restart) run make. It will create static library
+libgtkglut.a and dynamic libraries libgtkglut-0.3.7.dll with wrapper
+libgtkglut-0.3.7.dll.a.
+
+If you run make with paramter all (ie. make all), test files in progs are
+builded as well. They are static linked, so you may try experiment with library
+without any instalation.
+
+In package is gtkglut.nsi,which is NSIS install script. This make install file
+which containts compiled GtkGLUT libraries, sources and DevC++ project Template.
+
+Unlike the *nix release, the library names are NOT automatic replacements for
+the GLUT library names.  You may rename them manually if you wish.
+
+
+Installing the Libraries
+========================
+
+Best way is use binary installer (builded from gtkglut.nsi).
+
+

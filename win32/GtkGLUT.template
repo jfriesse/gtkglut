@@ -1,0 +1,22 @@
+[Template]
+ver=1
+Name=GtkGLUT
+Icon=
+Description=A basic GtkGLUT program
+Catagory=MultiMedia
+
+[Unit0]
+CName=main.c
+CppName=main.cpp
+C=GtkGLUT.txt
+Cpp=GtkGLUT.txt
+
+[Project]
+UnitCount=1
+Type=0
+Linker=-user32 -Wl,-luuid -LC:/GTK/lib -lgtkglut-0.3.7 -lgtkglext-win32-1.0 -lgdkglext-win32-1.0 -lglu32 -lopengl32 -luser32 -lkernel32 -lgtk-win32-2.0 -lgdk-win32-2.0 -lgdi32 -limm32  -lshell32 -lole32 -latk-1.0 -lgdk_pixbuf-2.0 -lpangowin32-1.0 -lpangocairo-1.0 -lcairo -lpangoft2-1.0 -lfontconfig -lfreetype -lz -lpango-1.0 -lm -lgobject-2.0 -lgmodule-2.0 -lglib-2.0 -lintl -liconv
+Compiler=-mms-bitfields -IC:/GTK/include/gtkglext-1.0 -IC:/GTK/lib/gtkglext-1.0/include -IC:/GTK/include/gtk-2.0 -IC:/GTK/lib/gtk-2.0/include -IC:/GTK/include/pango-1.0 -IC:/GTK/include/glib-2.0 -IC:/GTK/lib/glib-2.0/include -IC:/GTK/include/cairo -IC:/GTK/include/freetype2 -IC:/GTK/include -IC:/GTK/include/atk-1.0 -IC:/GTK/include/
+CppCompiler=-mms-bitfields -IC:/GTK/include/gtkglext-1.0 -IC:/GTK/lib/gtkglext-1.0/include -IC:/GTK/include/gtk-2.0 -IC:/GTK/lib/gtk-2.0/include -IC:/GTK/include/pango-1.0 -IC:/GTK/include/glib-2.0 -IC:/GTK/lib/glib-2.0/include -IC:/GTK/include/cairo -IC:/GTK/include/freetype2 -IC:/GTK/include -IC:/GTK/include/atk-1.0 -IC:/GTK/include/
+
+Name=GtkGLUT Demo
+
