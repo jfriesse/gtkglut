@@ -3,7 +3,7 @@
     \brief GtkGLUT Monospace Roman stroke font definition.
 */
 
-/* 
+/*
  * GtkGLUT Monospace Roman stroke font definition.
  *
  * Copyright (c) 2008 Jan Friesse. All Rights Reserved.
@@ -27,9 +27,9 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *
- * Except as contained in this notice, the name of Jan Friesse shall not be 
- * used in advertising or otherwise to promote the sale, use or other dealings in 
- * this Software without prior written authorization from Jan Friesse. 
+ * Except as contained in this notice, the name of Jan Friesse shall not be
+ * used in advertising or otherwise to promote the sale, use or other dealings in
+ * this Software without prior written authorization from Jan Friesse.
  *
  * Based on modified FreeGLUT code (freeglut_stroke_mono_roman.c). See COPYING file.
  */

@@ -3,7 +3,7 @@
     \brief All unimplemented functions reside in this file.
 */
 
-/* 
+/*
  * All unimplemented functions reside in this file.
  *
  * Copyright (c) 2008 Jan Friesse. All Rights Reserved.
@@ -27,9 +27,9 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *
- * Except as contained in this notice, the name of Jan Friesse shall not be 
- * used in advertising or otherwise to promote the sale, use or other dealings in 
- * this Software without prior written authorization from Jan Friesse. 
+ * Except as contained in this notice, the name of Jan Friesse shall not be
+ * used in advertising or otherwise to promote the sale, use or other dealings in
+ * this Software without prior written authorization from Jan Friesse.
  */
 #include "GL/gtkglut.h"
 #include "gtkglut_internal.h"
@@ -273,7 +273,7 @@ void glutForceJoystickFunc(void) {
               glutShowOverlay(), glutHideOverlay()
 */
 void glutEstablishOverlay(void) {
-  __gtkglut_unimplemented_warning("glutEstablishOverlay");    
+  __gtkglut_unimplemented_warning("glutEstablishOverlay");
 }
 
 /*!

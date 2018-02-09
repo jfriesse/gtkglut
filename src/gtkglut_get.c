@@ -3,7 +3,7 @@
     \brief GtkGLUT state query methods.
 */
 
-/* 
+/*
  * GtkGLUT state query methods.
  *
  * Copyright (c) 2008 Jan Friesse. All Rights Reserved.
@@ -27,9 +27,9 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *
- * Except as contained in this notice, the name of Jan Friesse shall not be 
- * used in advertising or otherwise to promote the sale, use or other dealings in 
- * this Software without prior written authorization from Jan Friesse. 
+ * Except as contained in this notice, the name of Jan Friesse shall not be
+ * used in advertising or otherwise to promote the sale, use or other dealings in
+ * this Software without prior written authorization from Jan Friesse.
  *
  */
 
@@ -41,7 +41,7 @@
 int __gtkglut_gl_config_attrib(__gtkglut_window_struct *glut_window,int attrib) {
   GdkGLConfig* gl_config;
   int res;
-  
+
   res=-1;
 
   gl_config=gtk_widget_get_gl_config(glut_window->drawing_area);
@@ -58,7 +58,7 @@ int __gtkglut_gl_config_attrib(__gtkglut_window_struct *glut_window,int attrib) 
 }
 
 /*Generate some format id, which describe visual, returned value:
-      Visual = 000000000 00000000 0OTTTTTT 00DDDDDD  
+      Visual = 000000000 00000000 0OTTTTTT 00DDDDDD
       TTTTTT = Type = GDK_VISUAL_STATIC_GRAY,GDK_VISUAL_GRAYSCALE,...
       DDDDDD = Depth in bits (ex. 24 = 24 bits)
       O = Byte order ( GDK_LSB_FIRST=0,GDK_MSB_FIRST=1)
@@ -67,19 +67,19 @@ int __gtkglut_gl_config_make_format_id(__gtkglut_window_struct *glut_window) {
   GdkGLConfig* gl_config;
   GdkVisual *visual;
   int res;
-  
+
   res=-1;
 
   gl_config=gtk_widget_get_gl_config(glut_window->drawing_area);
 
   if (gl_config) {
     visual=gdk_gl_config_get_visual(gl_config);
-    
-    /*Visual = 000000000 00000000 0OTTTTTT 00DDDDDD  
+
+    /*Visual = 000000000 00000000 0OTTTTTT 00DDDDDD
       TTTTTT = Type = GDK_VISUAL_STATIC_GRAY,GDK_VISUAL_GRAYSCALE,...
       DDDDDD = Depth in bits (ex. 24 = 24 bits)
       O = Byte order ( GDK_LSB_FIRST=0,GDK_MSB_FIRST=1)
-    */  
+    */
     res=(visual->depth&0x3F) | ((visual->type&0x3F)<<8) | ((visual->byte_order&0x1)<<15);
   } else {
       __gtkglut_warning("__gtkglut_gl_config_make_format_id","can't get valid gl_config for window %d",glutGetWindow());
@@ -109,7 +109,7 @@ int __gtkglut_gl_config_make_format_id(__gtkglut_window_struct *glut_window) {
     \ingroup  state
     \param    state    Enumerated parameter ID.
 
-              Query for the current value of one of many possible GtkGLUT 
+              Query for the current value of one of many possible GtkGLUT
               state variables.  The current list is:
 
               - \a GLUT_ACTION_ON_WINDOW_CLOSE \n
@@ -151,10 +151,10 @@ int __gtkglut_gl_config_make_format_id(__gtkglut_window_struct *glut_window) {
 
               - \a GLUT_VERSION \n
                    Emulate Freeglut
-                   
+
               - \a GTKGLUT_VERSION \n
                    Version of GtkGLUT
-                   
+
               - \a GLUT_WINDOW_ACCUM_ALPHA_SIZE \n
 
               - \a GLUT_WINDOW_ACCUM_BLUE_SIZE \n
@@ -220,13 +220,13 @@ int glutGet(GLenum state) {
   __gtkglut_window_struct *glut_window;
   __gtkglut_menu_struct *glut_menu;
   int x,y,width,height;
-  
+
   if (!__gtkglut_context) {
     __gtkglut_context_init();
   }
 
   res=-1;
-  
+
   switch (state) {
     case GLUT_ELAPSED_TIME:
       return (int)(g_timer_elapsed(__gtkglut_context->elapsed_time_timer, NULL)*1000);
@@ -235,7 +235,7 @@ int glutGet(GLenum state) {
     case GLUT_INIT_DISPLAY_MODE:
       return __gtkglut_context->display_mode;
     break;
-    
+
     case GLUT_INIT_WINDOW_HEIGHT:
       return __gtkglut_context->window_init_geometry.height;
     break;
@@ -262,13 +262,13 @@ int glutGet(GLenum state) {
   }
 
    __gtkglut_test_inicialization("glutGet");
-   
+
   /*Function, which needs inicialization*/
   switch (state) {
     case GLUT_SCREEN_WIDTH:
       res=gdk_screen_get_width(gdk_screen_get_default());
     break;
-    
+
     case GLUT_SCREEN_HEIGHT:
       res=gdk_screen_get_height(gdk_screen_get_default());
     break;
@@ -276,7 +276,7 @@ int glutGet(GLenum state) {
     case GLUT_SCREEN_WIDTH_MM:
       res=gdk_screen_get_width_mm(gdk_screen_get_default());
     break;
-    
+
     case GLUT_SCREEN_HEIGHT_MM:
       res=gdk_screen_get_height_mm(gdk_screen_get_default());
     break;
@@ -292,7 +292,7 @@ int glutGet(GLenum state) {
     case GLUT_WINDOW_STENCIL_SIZE:
     case GLUT_WINDOW_DEPTH_SIZE:
     case GLUT_WINDOW_RED_SIZE:
-    case GLUT_WINDOW_GREEN_SIZE:  
+    case GLUT_WINDOW_GREEN_SIZE:
     case GLUT_WINDOW_BLUE_SIZE:
     case GLUT_WINDOW_ALPHA_SIZE:
     case GLUT_WINDOW_ACCUM_RED_SIZE:
@@ -313,13 +313,13 @@ int glutGet(GLenum state) {
       if (glut_window) {
         if (state==GLUT_WINDOW_X) {
           gdk_window_get_root_origin(glut_window->drawing_area->window,&x,&y);
-          
+
           res=x;
         }
 
         if (state==GLUT_WINDOW_Y) {
           gdk_window_get_root_origin(glut_window->drawing_area->window,&x,&y);
-          
+
           res=y;
         }
 
@@ -328,7 +328,7 @@ int glutGet(GLenum state) {
 
            res=width;
         }
-        
+
         if (state==GLUT_WINDOW_HEIGHT) {
            gdk_drawable_get_size(glut_window->drawing_area->window,&width,&height);
 
@@ -339,7 +339,7 @@ int glutGet(GLenum state) {
         if (state==GLUT_WINDOW_STENCIL_SIZE) res=__gtkglut_gl_config_attrib(glut_window,GDK_GL_STENCIL_SIZE);
         if (state==GLUT_WINDOW_DEPTH_SIZE) res=__gtkglut_gl_config_attrib(glut_window,GDK_GL_DEPTH_SIZE);
         if (state==GLUT_WINDOW_RED_SIZE) res=__gtkglut_gl_config_attrib(glut_window,GDK_GL_RED_SIZE);
-        if (state==GLUT_WINDOW_GREEN_SIZE) res=__gtkglut_gl_config_attrib(glut_window,GDK_GL_GREEN_SIZE); 
+        if (state==GLUT_WINDOW_GREEN_SIZE) res=__gtkglut_gl_config_attrib(glut_window,GDK_GL_GREEN_SIZE);
         if (state==GLUT_WINDOW_BLUE_SIZE) res=__gtkglut_gl_config_attrib(glut_window,GDK_GL_BLUE_SIZE);
         if (state==GLUT_WINDOW_ALPHA_SIZE) res=__gtkglut_gl_config_attrib(glut_window,GDK_GL_ALPHA_SIZE);
         if (state==GLUT_WINDOW_ACCUM_RED_SIZE) res=__gtkglut_gl_config_attrib(glut_window,GDK_GL_ACCUM_RED_SIZE);
@@ -361,7 +361,7 @@ int glutGet(GLenum state) {
       }
     break;
   }
-  
+
   if (state==GLUT_MENU_NUM_ITEMS) {
     /*Need actual menu*/
     glut_menu=__gtkglut_get_active_menu_with_warning("glutGet");
@@ -382,7 +382,7 @@ int glutGet(GLenum state) {
     \brief    Query the Alt, Shift and Ctrl keys.
     \ingroup  inputstate
 
-              Return the logical \a OR combination of the 
+              Return the logical \a OR combination of the
               following symbolic bitmasks:
 
                - \a GLUT_ACTIVE_SHIFT
@@ -399,7 +399,7 @@ int glutGetModifiers(void) {
   int res;
   /*Short name for __gtkglut_context->keyboard_modifiers*/
   guint mod;
-  
+
   __gtkglut_test_inicialization("glutGetModifiers");
 
   glut_window=__gtkglut_get_active_window_with_warning("glutGetModifiers");
@@ -410,7 +410,7 @@ int glutGetModifiers(void) {
       __gtkglut_warning("glutGetModifiers","can be called only in mouse or keyboard callback");
     } else {
       mod=__gtkglut_context->keyboard_modifiers;
-      
+
       if (mod&GDK_SHIFT_MASK) res|=GLUT_ACTIVE_SHIFT;
       if (mod&GDK_CONTROL_MASK) res|=GLUT_ACTIVE_CTRL;
       if (mod&GDK_MOD1_MASK) res|=GLUT_ACTIVE_ALT;
@@ -457,12 +457,12 @@ int glutGetModifiers(void) {
 int glutLayerGet(GLenum info) {
   int res;
   __gtkglut_window_struct *glut_window;
-  
+
   __gtkglut_test_inicialization("glutLayerGet");
 
   if (info==GLUT_OVERLAY_POSSIBLE)
     return FALSE;
-    
+
   res=0;
   glut_window=__gtkglut_get_active_window_with_warning("glutLayerGet");
 
@@ -475,7 +475,7 @@ int glutLayerGet(GLenum info) {
       case GLUT_NORMAL_DAMAGED:    res=glut_window->damaged;      break;
       case GLUT_OVERLAY_DAMAGED:   res=-1;         break;
       default:
-        __gtkglut_warning("glutLayerGet","unknown state %d",info);                             
+        __gtkglut_warning("glutLayerGet","unknown state %d",info);
     }
   }
 
@@ -558,15 +558,15 @@ int glutLayerGet(GLenum info) {
 */int glutDeviceGet(GLenum info) {
   int res;
   __gtkglut_test_inicialization("glutDeviceGet");
-  
+
   res=0;
-  
+
   switch (info) {
     case GLUT_HAS_KEYBOARD:
       /*We assume, that have keyboard.*/
       res=TRUE;
     break;
-  
+
     case GLUT_HAS_MOUSE:
       /*We assume, everybody have mouse*/
       res=TRUE;
@@ -576,14 +576,14 @@ int glutLayerGet(GLenum info) {
     case GLUT_HAS_DIAL_AND_BUTTON_BOX:
     case GLUT_HAS_TABLET:
       /*This devices is unimplemented*/
-      res=FALSE;  
+      res=FALSE;
     break;
 
     case GLUT_NUM_MOUSE_BUTTONS:
       /*We assume 3 buttons*/
       res=3;
     break;
-  
+
     case GLUT_NUM_SPACEBALL_BUTTONS:
     case GLUT_NUM_BUTTON_BOX_BUTTONS:
     case GLUT_NUM_DIALS:
@@ -591,12 +591,12 @@ int glutLayerGet(GLenum info) {
       /*We don't have any support for this devices*/
       res=0;
     break;
-    
+
     case GLUT_DEVICE_IGNORE_KEY_REPEAT:
       /*We don't support ignore key repeat*/
       res=FALSE;
     break;
-    
+
     case GLUT_DEVICE_KEY_REPEAT:
       res=GLUT_KEY_REPEAT_ON;
     break;
@@ -627,17 +627,17 @@ int glutLayerGet(GLenum info) {
 int glutExtensionSupported(char *extension) {
   __gtkglut_window_struct *glut_window;
   int res;
-  
+
   __gtkglut_test_inicialization("glutExtensionSupported");
-  
+
   glut_window=__gtkglut_get_active_window_with_warning("glutGet");
-  
+
   res=0;
-  
+
   if (glut_window) {
     res=gdk_gl_query_gl_extension(extension);
   }
-  
+
   return res;
 }
 

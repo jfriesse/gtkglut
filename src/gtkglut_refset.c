@@ -3,7 +3,7 @@
     \brief GtkGLUT refset ADS.
 */
 
-/* 
+/*
  * GtkGLUT refset ADS.
  *
  * Copyright (c) 2008 Jan Friesse. All Rights Reserved.
@@ -27,9 +27,9 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *
- * Except as contained in this notice, the name of Jan Friesse shall not be 
- * used in advertising or otherwise to promote the sale, use or other dealings in 
- * this Software without prior written authorization from Jan Friesse. 
+ * Except as contained in this notice, the name of Jan Friesse shall not be
+ * used in advertising or otherwise to promote the sale, use or other dealings in
+ * this Software without prior written authorization from Jan Friesse.
  *
  */
 
@@ -44,7 +44,7 @@ GList *__gtkglut_refset_ref(GList *list,gpointer ref) {
   GList *elem;
   __gtkglut_refset_item *item;
   gboolean found;
-  
+
   found=FALSE;
   elem=list;
 
@@ -54,7 +54,7 @@ GList *__gtkglut_refset_ref(GList *list,gpointer ref) {
     if (item->ref==ref) {
       found=TRUE;
     }
-    
+
     elem=g_list_next(elem);
   }
 
@@ -79,7 +79,7 @@ GList *__gtkglut_refset_unref(GList *list,gpointer ref) {
   GList *elem;
   __gtkglut_refset_item *item;
   gboolean found;
-  
+
   found=FALSE;
   elem=list;
 
@@ -89,7 +89,7 @@ GList *__gtkglut_refset_unref(GList *list,gpointer ref) {
     if (item->ref==ref) {
       found=TRUE;
     }
-    
+
     elem=g_list_next(elem);
   }
 
@@ -101,7 +101,7 @@ GList *__gtkglut_refset_unref(GList *list,gpointer ref) {
       free(item);
     }
   }
- 
+
   return list;
 }
 
@@ -109,20 +109,20 @@ GList *__gtkglut_refset_unref(GList *list,gpointer ref) {
 GList *__gtkglut_refset_destroy(GList *list) {
   GList *elem;
   __gtkglut_refset_item *item;
-  
+
   elem=list;
 
   while (elem) {
     item=(__gtkglut_refset_item*)elem->data;
 
     free(item);
-    
+
     elem=g_list_next(elem);
   }
 
   /*All childs data are destroyed, destroy list*/
   g_list_free(list);
-  
+
   return NULL;
 }
 

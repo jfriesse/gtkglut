@@ -3,7 +3,7 @@
     \brief Pop-up menu creation and handling.
 */
 
-/* 
+/*
  * Pop-up menu creation and handling.
  *
  * Copyright (c) 2008 Jan Friesse. All Rights Reserved.
@@ -27,9 +27,9 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *
- * Except as contained in this notice, the name of Jan Friesse shall not be 
- * used in advertising or otherwise to promote the sale, use or other dealings in 
- * this Software without prior written authorization from Jan Friesse. 
+ * Except as contained in this notice, the name of Jan Friesse shall not be
+ * used in advertising or otherwise to promote the sale, use or other dealings in
+ * this Software without prior written authorization from Jan Friesse.
  */
 
 #include "GL/gtkglut.h"
@@ -55,9 +55,9 @@ __gtkglut_menu_struct *__gtkglut_get_menu_by_id(int menu_id) {
   if (menu_id<0 || !__gtkglut_context->menu_array || (guint)menu_id>=__gtkglut_context->menu_array->len) {
     return NULL;
   }
-  
+
   return (__gtkglut_menu_struct*)g_ptr_array_index(__gtkglut_context->menu_array,menu_id);
-} 
+}
 
 /*! \defgroup menus Menu Management
 
@@ -138,9 +138,9 @@ __gtkglut_menu_struct *__gtkglut_get_active_menu_with_warning(char *func_name) {
 */
 void glutSetMenu(int menu) {
   __gtkglut_menu_struct *glut_menu;
-  
+
   __gtkglut_test_inicialization("glutSetMenu");
-  
+
   if (menu<1 || (guint)menu>=__gtkglut_context->menu_array->len) {
     __gtkglut_warning("glutSetMenu","Attempted on bogus menu %d!",menu);
     return ;
@@ -150,9 +150,9 @@ void glutSetMenu(int menu) {
 
   glut_menu=__gtkglut_get_menu_by_id(menu);
 
-  if (!glut_menu) {        
+  if (!glut_menu) {
     __gtkglut_warning("glutSetMenu","You are trying set menu to nonexistent menu %d!",menu);
-    
+
     return ;
   }
 }
@@ -162,21 +162,21 @@ void __gtkglut_set_menu_in_use(__gtkglut_menu_struct *glut_menu,gboolean in_use)
   GList *elem;
   __gtkglut_menu_item_struct *menu_item;
   __gtkglut_menu_struct *glut_submenu;
-  
+
   if (glut_menu->in_use!=in_use) {
     /*Set in use*/
     glut_menu->in_use=in_use;
-    
+
     /*Traverse all childs data*/
     elem=glut_menu->child_items;
-  
+
     while (elem) {
       /*Test if child is submenu*/
       menu_item=(__gtkglut_menu_item_struct*)(elem->data);
-      
+
       if (menu_item->submenu_id) {
         /*Menu have submenu*/
-        
+
         glut_submenu=__gtkglut_get_menu_by_id(menu_item->submenu_id);
 
         if (!glut_submenu) {
@@ -185,7 +185,7 @@ void __gtkglut_set_menu_in_use(__gtkglut_menu_struct *glut_menu,gboolean in_use)
           __gtkglut_set_menu_in_use(glut_submenu,in_use);
         }
       }
-      
+
       elem=g_list_next(elem);
     }
   }
@@ -198,7 +198,7 @@ void  __gtkglut_callback_menu_deactivate_handler(GtkMenuShell *menushell,gpointe
   __gtkglut_menu_struct *glut_menu;
   __gtkglut_window_struct *glut_window;
   int mouse_x,mouse_y;
-  
+
   menu_id=GPOINTER_TO_INT(data);
 
   glut_menu=__gtkglut_get_menu_by_id(menu_id);
@@ -217,16 +217,16 @@ void  __gtkglut_callback_menu_deactivate_handler(GtkMenuShell *menushell,gpointe
         __gtkglut_warning("__gtkglut_callback_menu_deactivate_handler","called deactivate menu on nonexisting window %d",window_id);
       } else {
         gdk_window_get_pointer (glut_window->drawing_area->window,&mouse_x,&mouse_y,NULL);
-      
+
         __gtkglut_call_menu_status_func(GLUT_MENU_NOT_IN_USE,mouse_x,mouse_y,window_id,menu_id);
-	
+
         __gtkglut_set_menu_in_use(glut_menu,FALSE);
 
         glut_menu->popuped_from_window_id=0;
       }
     }
   }
-  
+
 }
 
 /*!
@@ -247,7 +247,7 @@ void  __gtkglut_callback_menu_deactivate_handler(GtkMenuShell *menushell,gpointe
 int glutCreateMenu(void (*func)(int value)) {
   int menu_id;
   __gtkglut_menu_struct *glut_menu;
-  
+
   __gtkglut_test_inicialization("glutCreateMenu");
 
   if (!func) {
@@ -255,18 +255,18 @@ int glutCreateMenu(void (*func)(int value)) {
 
     return -1;
   }
-  
+
   glut_menu=(__gtkglut_menu_struct*)malloc(sizeof(__gtkglut_menu_struct));
-  if (!glut_menu) 
+  if (!glut_menu)
     __gtkglut_lowmem();
-  
+
   glut_menu->func=func;
   glut_menu->cached_gtk_menu=NULL;
   glut_menu->child_items=NULL;
   glut_menu->in_use=FALSE;
   glut_menu->popuped_from_window_id=0;
   glut_menu->need_refresh=TRUE;
-  glut_menu->parent_menus=NULL; 
+  glut_menu->parent_menus=NULL;
   glut_menu->user_data=NULL;
 
   __gtkglut_menu_array_append(glut_menu);
@@ -291,7 +291,7 @@ void glutDestroyMenu(int menu) {
   __gtkglut_menu_struct *glut_menu;
   GtkWidget *widget_to_destroy;
   GList *elem;
-  
+
   __gtkglut_test_inicialization("glutDestroyMenu");
 
   glut_menu=__gtkglut_get_menu_by_id(menu);
@@ -300,12 +300,12 @@ void glutDestroyMenu(int menu) {
     __gtkglut_warning("glutDestroyMenu","trying destroy nonexistent menu %d",menu);
     return;
   }
-  
+
   if (glut_menu->in_use) {
     __gtkglut_warning("glutDestroyMenu","trying destroy menu %d which is in use",menu);
     return;
   }
-  
+
   if (glut_menu) {
     widget_to_destroy=glut_menu->cached_gtk_menu;
 
@@ -313,10 +313,10 @@ void glutDestroyMenu(int menu) {
     if (widget_to_destroy) {
       gtk_widget_destroy (widget_to_destroy);
     }
-    
+
     /*Destroy all childs data*/
     elem=glut_menu->child_items;
-  
+
     while (elem) {
       /*Destroy child*/
       free(elem->data);
@@ -325,15 +325,15 @@ void glutDestroyMenu(int menu) {
 
     /*All childs data are destroyed, destroy list*/
     g_list_free(glut_menu->child_items);
-    
+
     /*Unlink from array, destroy data structure*/
     g_ptr_array_index(__gtkglut_context->menu_array,menu)=NULL;
 
     if (glut_menu->parent_menus)
       __gtkglut_refset_destroy(glut_menu->parent_menus);
-    
+
     free(glut_menu);
-    
+
     if (menu==glutGetMenu()) {
       __gtkglut_context->current_menu=0;
     }
@@ -345,7 +345,7 @@ void __gtkglut_callback_menu_activate_handler(GtkMenuItem *menu_item,gpointer da
   __gtkglut_menu_item_struct *menu_item_data;
   __gtkglut_menu_struct *glut_menu;
   void (*callback_func)(int value);
-  
+
   menu_item_data=(__gtkglut_menu_item_struct *)data;
 
   if (!menu_item_data->submenu_id) {
@@ -376,14 +376,14 @@ char *__gtkglut_convert_name_with_mnemonic(char *name) {
   char *res;
   unsigned int i;
   char *resp;
-  
+
   /*We replace _ to __ -> in worst case, we need 2*strlen(name)+1 chars*/
   res=(char*)malloc(strlen(name)*2+1);
   if (!res)
     __gtkglut_lowmem();
 
   resp=res;
-  
+
   for (i=0;i<strlen(name);i++) {
     if (name[i]=='_') {
       *resp='_';resp++;
@@ -405,7 +405,7 @@ void __gtkglut_menu_notify_parent_menus(__gtkglut_menu_struct *menu,int depth) {
   GList *elem;
   __gtkglut_refset_item *item;
   __gtkglut_menu_struct *parent_menu;
-  
+
   elem=menu->parent_menus;
 
   if (depth>__GTKGLUT_MAX_MENU_DEPTH) {
@@ -413,7 +413,7 @@ void __gtkglut_menu_notify_parent_menus(__gtkglut_menu_struct *menu,int depth) {
 
     return ;
   }
-  
+
   while (elem) {
     item=(__gtkglut_refset_item*)elem->data;
 
@@ -433,7 +433,7 @@ __gtkglut_menu_item_struct *__gtkglut_add_menu_entry(char *func_name,char *name,
   __gtkglut_menu_struct *glut_menu;
   __gtkglut_menu_struct *glut_sub_menu;
   __gtkglut_menu_item_struct *menu_item_data;
-  
+
   __gtkglut_test_inicialization(func_name);
 
   glut_sub_menu=NULL;
@@ -446,7 +446,7 @@ __gtkglut_menu_item_struct *__gtkglut_add_menu_entry(char *func_name,char *name,
       __gtkglut_warning(func_name,"trying change menu %d which is in use",glutGetMenu());
       return NULL;
     }
-    
+
     if (submenu_id) {
       glut_sub_menu=__gtkglut_get_menu_by_id(submenu_id);
 
@@ -454,24 +454,24 @@ __gtkglut_menu_item_struct *__gtkglut_add_menu_entry(char *func_name,char *name,
         __gtkglut_warning(func_name,"Attempted to add bogus menu %d",submenu_id);
 
         return NULL;
-      } 
+      }
     }
-    
+
     label=__gtkglut_convert_name_with_mnemonic(name);
-    
+
     if (!label)
       __gtkglut_lowmem();
-    
+
     menu_item_data=(__gtkglut_menu_item_struct*)malloc(sizeof(__gtkglut_menu_item_struct));
-    
-    if (!menu_item_data) 
+
+    if (!menu_item_data)
       __gtkglut_lowmem();
 
     menu_item_data->label=label;
     menu_item_data->parent_menu_id=glutGetMenu();
     menu_item_data->value=value;
     menu_item_data->submenu_id=submenu_id;
-    
+
     if (submenu_id) {
       /*We add submenu -> we want be notified, if submenu changes*/
       glut_sub_menu->parent_menus=__gtkglut_refset_ref(glut_sub_menu->parent_menus,glut_menu);
@@ -503,7 +503,7 @@ void __gtkglut_change_menu_entry(char *func_name,int entry,char *name,int value,
       __gtkglut_warning(func_name,"trying change menu %d which is in use",glutGetMenu());
       return ;
     }
-    
+
     /*Get item*/
     if (entry<1 || entry>(gint)g_list_length(glut_menu->child_items)) {
       __gtkglut_warning(func_name,"Attempt on bogus item entry %d",entry);
@@ -511,10 +511,10 @@ void __gtkglut_change_menu_entry(char *func_name,int entry,char *name,int value,
       if (submenu_id) {
         /*Test menu validity*/
         glut_sub_menu=__gtkglut_get_menu_by_id(submenu_id);
-        
+
         if (!glut_sub_menu) {
           __gtkglut_warning(func_name,"Attempt to change link to bogus menu %d",submenu_id);
-        
+
           return ;
         }
       }
@@ -523,12 +523,12 @@ void __gtkglut_change_menu_entry(char *func_name,int entry,char *name,int value,
 
       if (!label)
         __gtkglut_lowmem();
-      
+
       menu_item_data=(__gtkglut_menu_item_struct*)g_list_nth_data(glut_menu->child_items,entry-1);
 
-      if (menu_item_data->label) 
+      if (menu_item_data->label)
         free(menu_item_data->label);
-        
+
       menu_item_data->label=label;
       menu_item_data->value=value;
 
@@ -541,7 +541,7 @@ void __gtkglut_change_menu_entry(char *func_name,int entry,char *name,int value,
           glut_old_sub_menu->parent_menus=__gtkglut_refset_unref(glut_old_sub_menu->parent_menus,glut_menu);
         }
       }
-      
+
       menu_item_data->submenu_id=submenu_id;
 
       if (submenu_id) {
@@ -552,7 +552,7 @@ void __gtkglut_change_menu_entry(char *func_name,int entry,char *name,int value,
       glut_menu->need_refresh=TRUE;
       __gtkglut_menu_notify_parent_menus(glut_menu,0);
     }
-  }      
+  }
 }
 
 /*!
@@ -645,7 +645,7 @@ void glutChangeToSubMenu(int entry, char *name, int menu) {
 void glutAttachMenu(int button) {
   __gtkglut_window_struct *glut_window;
   __gtkglut_menu_struct *glut_menu;
-  
+
   __gtkglut_test_inicialization("glutAttachMenu");
 
   if (button<0 || button>=__GTKGLUT_MAX_MOUSE_BUTTONS) {
@@ -656,7 +656,7 @@ void glutAttachMenu(int button) {
 
   glut_window=__gtkglut_get_active_window_with_warning("glutAttachMenu");
   glut_menu=__gtkglut_get_active_menu_with_warning("glutAttachMenu");
-  
+
   if (glut_window && glut_menu) {
     if (glut_menu->in_use) {
       __gtkglut_warning("glutAttachMenu","trying attach menu %d which is in use",glutGetMenu());
@@ -682,7 +682,7 @@ void glutAttachMenu(int button) {
 void glutDetachMenu(int button) {
   __gtkglut_window_struct *glut_window;
   __gtkglut_menu_struct *glut_menu;
-  
+
   __gtkglut_test_inicialization("glutDetachMenu");
 
   if (button<0 || button>=__GTKGLUT_MAX_MOUSE_BUTTONS) {
@@ -753,7 +753,7 @@ void glutRemoveMenuItem(int entry) {
       __gtkglut_warning("glutRemoveMenuItem","trying change menu %d which is in use",glutGetMenu());
       return ;
     }
-    
+
     /*Get item*/
     if (entry<1 || entry>(gint)g_list_length(glut_menu->child_items)) {
       __gtkglut_warning("glutRemoveMenuItem","Attempt on bogus item entry %d",entry);
@@ -764,9 +764,9 @@ void glutRemoveMenuItem(int entry) {
       glut_menu->child_items=g_list_remove(glut_menu->child_items,menu_item_data);
 
       /*Free menu item data*/
-      if (menu_item_data->label) 
+      if (menu_item_data->label)
         free(menu_item_data->label);
-      
+
       if (menu_item_data->submenu_id) {
         /*We had registered old version -> remove*/
         glut_old_sub_menu=__gtkglut_get_menu_by_id(menu_item_data->submenu_id);
@@ -776,14 +776,14 @@ void glutRemoveMenuItem(int entry) {
           glut_old_sub_menu->parent_menus=__gtkglut_refset_unref(glut_old_sub_menu->parent_menus,glut_menu);
         }
       }
-      
+
       free(menu_item_data);
 
       glut_menu->need_refresh=TRUE;
       __gtkglut_menu_notify_parent_menus(glut_menu,0);
     }
-  }      
-  
+  }
+
 }
 
 /*!
@@ -800,7 +800,7 @@ void glutRemoveMenuItem(int entry) {
 */
 void glutSetMenuData(void *data) {
   __gtkglut_menu_struct *glut_menu;
-  
+
   __gtkglut_test_inicialization("glutSetMenuData");
 
   glut_menu=__gtkglut_get_active_menu_with_warning("glutSetMenuData");
@@ -822,9 +822,9 @@ void glutSetMenuData(void *data) {
 void *glutGetMenuData(void) {
   __gtkglut_menu_struct *glut_menu;
   void *res;
-  
+
   res=NULL;
-  
+
   __gtkglut_test_inicialization("glutGetMenuData");
 
   glut_menu=__gtkglut_get_active_menu_with_warning("glutGetMenuData");
@@ -842,7 +842,7 @@ void __gtkglut_menu_debug_print(int menu) {
   GList *elem;
   __gtkglut_menu_item_struct *menu_item_data;
   int i;
-  
+
   __gtkglut_test_inicialization("__gtkglut_menu_debug_print");
 
   glut_menu=__gtkglut_get_menu_by_id(menu);
@@ -851,26 +851,26 @@ void __gtkglut_menu_debug_print(int menu) {
     __gtkglut_warning("__gtkglut_menu_debug_print","trying destroy nonexistent menu %d",menu);
     return;
   }
-  
+
   if (glut_menu->in_use) {
     __gtkglut_warning("__gtkglut_menu_debug_print","trying destroy menu %d which is in use",menu);
     return;
   }
-  
+
   if (glut_menu) {
     printf("*Menu debug print: [id:%d,cached:%p,use:%d,needref:%d]\n",menu,glut_menu->cached_gtk_menu,
         glut_menu->in_use,glut_menu->need_refresh);
 
     /*Destroy all childs data*/
     elem=glut_menu->child_items;
-  
+
     i=1;
     while (elem) {
       /*Destroy child*/
       menu_item_data=(__gtkglut_menu_item_struct*)elem->data;
       printf("Submenu item %d [label:%s,par_m_id:%d,val:%d,subm_id:%d]\n",
          i,menu_item_data->label,menu_item_data->parent_menu_id,menu_item_data->value,menu_item_data->submenu_id);
-      
+
       elem=g_list_next(elem);
       i++;
     }
@@ -886,19 +886,19 @@ GtkWidget *__gtkglut_regenerate_menu(int menu_id,int depth) {
   GtkWidget *gtk_sub_menu;
   GtkWidget *gtk_menu_item;
   GList *elem;
-  
+
   if (depth>__GTKGLUT_MAX_MENU_DEPTH) {
     __gtkglut_warning("__gtkglut_regenerate_menu","Menu is too deep (>%d)",__GTKGLUT_MAX_MENU_DEPTH);
   }
-  
+
   glut_menu=__gtkglut_get_menu_by_id(menu_id);
 
   if (!glut_menu) {
     __gtkglut_warning("__gtkglut_regenerate_menu","Attempt on bogus menu %d",menu_id);
-    
+
     return NULL;
   }
-  
+
   if (depth==0) {
     if (!glut_menu->need_refresh && glut_menu->cached_gtk_menu)
       return glut_menu->cached_gtk_menu;
@@ -908,19 +908,19 @@ GtkWidget *__gtkglut_regenerate_menu(int menu_id,int depth) {
       gtk_widget_destroy(glut_menu->cached_gtk_menu);
     }
   }
-  
+
   gtk_menu=gtk_menu_new();
 
   if (depth==0) {
     g_signal_connect (G_OBJECT (gtk_menu), "deactivate",G_CALLBACK (__gtkglut_callback_menu_deactivate_handler),GINT_TO_POINTER(menu_id));
   }
-  
+
   /*Add all childs*/
   elem=glut_menu->child_items;
 
   while (elem) {
     glut_menu_item=(__gtkglut_menu_item_struct*)elem->data;
-    
+
     gtk_menu_item=gtk_menu_item_new_with_mnemonic(glut_menu_item->label);
     gtk_menu_shell_append(GTK_MENU_SHELL(gtk_menu),gtk_menu_item);
 
@@ -944,6 +944,6 @@ GtkWidget *__gtkglut_regenerate_menu(int menu_id,int depth) {
     glut_menu->need_refresh=FALSE;
     glut_menu->cached_gtk_menu=gtk_menu;
   }
-  
+
   return gtk_menu;
 }

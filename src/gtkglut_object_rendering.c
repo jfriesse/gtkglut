@@ -3,7 +3,7 @@
     \brief Algorithmic geometric objects.
 */
 
-/* 
+/*
  * GtkGLUT geometry rendering methods.
  *
  * Copyright (c) 2008 Jan Friesse. All Rights Reserved.
@@ -27,9 +27,9 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *
- * Except as contained in this notice, the name of Jan Friesse shall not be 
- * used in advertising or otherwise to promote the sale, use or other dealings in 
- * this Software without prior written authorization from Jan Friesse. 
+ * Except as contained in this notice, the name of Jan Friesse shall not be
+ * used in advertising or otherwise to promote the sale, use or other dealings in
+ * this Software without prior written authorization from Jan Friesse.
  *
  * Contains some little modified code from FreeGLUT, see COPYING file
  */
@@ -39,13 +39,13 @@
 #include <math.h>
 
 /*! \defgroup geometry Geometric Rendering
-    
+
     This subset of GtkGLUT provides some elementary objects that
     are more or less standard fare for computer graphics.
     The objects all provide coordinates and surface
     normals.
 */
-		    
+
 /*!
     \ingroup  geometry
     \brief    Draw a solid sphere centered at the origin.
@@ -70,7 +70,7 @@ void glutSolidSphere(GLdouble radius,GLint slices, GLint stacks) {
   __gtkglut_test_inicialization("glutSolidSphere");
 
   gdk_gl_draw_sphere(TRUE,radius,slices,stacks);
-}              
+}
 
 /*!
     \ingroup  geometry
@@ -453,7 +453,7 @@ void glutWireTeapot(GLdouble size) {
   gdk_gl_draw_teapot(FALSE,size);
 }
 
-                          
+
 /*** PART OF FREEGLUT*/
 #ifndef __GTKGLUT_M_PI
 #    define  __GTKGLUT_M_PI  3.14159265358979323846
@@ -531,7 +531,7 @@ void  glutSolidRhombicDodecahedron(void) {
     glVertex3dv ( __gtkglut_rdod_r[__gtkglut_rdod_v[i][3]] ) ;
   }
 
-  glEnd () ;  
+  glEnd () ;
 }
 
 /* Magic Numbers:  r0 = ( 1, 0, 0 )
@@ -555,7 +555,7 @@ static GLint __gtkglut_tet_i[4][3] =  /* Vertex indices */
 {
   { 1, 3, 2 }, { 0, 2, 3 }, { 0, 3, 1 }, { 0, 1, 2 }
 } ;
-                        
+
 /*!
     \brief    Draw a wireframe Spierspinski's sponge.
     \ingroup  geometry
@@ -680,7 +680,7 @@ void glutSolidSierpinskiSponge ( int num_levels, GLdouble offset[3], GLdouble sc
  *    The size of the table is (n+1) to form a connected loop
  *    The last entry is exactly the same as the first
  *    The sign of n can be flipped to get the reverse loop
- */               
+ */
 static void __gtkglut_circle_table(double **sint,double **cost,const int n)
 {
     int i;
@@ -820,7 +820,7 @@ void glutSolidCylinder( GLdouble radius, GLdouble height, GLint slices, GLint st
 
   __gtkglut_circle_table(&sint,&cost,-slices);
 
-  /* Cover the base and top */      
+  /* Cover the base and top */
 
   glBegin(GL_TRIANGLE_FAN);
       glNormal3d(0.0, 0.0, -1.0 );

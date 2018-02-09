@@ -3,7 +3,7 @@
     \brief The game mode handling code..
 */
 
-/* 
+/*
  * The game mode handling code..
  *
  * Copyright (c) 2008 Jan Friesse. All Rights Reserved.
@@ -27,9 +27,9 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *
- * Except as contained in this notice, the name of Jan Friesse shall not be 
- * used in advertising or otherwise to promote the sale, use or other dealings in 
- * this Software without prior written authorization from Jan Friesse. 
+ * Except as contained in this notice, the name of Jan Friesse shall not be
+ * used in advertising or otherwise to promote the sale, use or other dealings in
+ * this Software without prior written authorization from Jan Friesse.
  *
  */
 
@@ -49,8 +49,8 @@
        Replacing game mode with a better
        design was discussed at some length in early 2004.
 
-       One idea was to decompose gamemode into component parts 
-       and implement them separately, where each part then either 
+       One idea was to decompose gamemode into component parts
+       and implement them separately, where each part then either
        succeeds totally or fails totally:
 
        - Resolution change.
@@ -135,7 +135,7 @@ int  glutEnterGameMode(void) {
     \see      glutGameModeString(), glutEnterGameMode(), glutLeaveGameMode(),
               glutGameModeGet()
 */
-void  glutLeaveGameMode(void){ 
+void  glutLeaveGameMode(void){
   __gtkglut_unimplemented_warning("glutLeaveGameMode");
 }
 
@@ -180,7 +180,7 @@ void  glutLeaveGameMode(void){
 */
 int glutGameModeGet(GLenum mode) {
   __gtkglut_unimplemented_warning("glutGameModeGet");
-  
+
   /*From specification, we can always return 0*/
   return 0;
 }

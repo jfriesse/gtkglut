@@ -3,7 +3,7 @@
     \brief GtkGLUT Internal functions.
 */
 
-/* 
+/*
  * GtkGLUT Internal functions.
  *
  * Copyright (c) 2008 Jan Friesse. All Rights Reserved.
@@ -27,9 +27,9 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *
- * Except as contained in this notice, the name of Jan Friesse shall not be 
- * used in advertising or otherwise to promote the sale, use or other dealings in 
- * this Software without prior written authorization from Jan Friesse. 
+ * Except as contained in this notice, the name of Jan Friesse shall not be
+ * used in advertising or otherwise to promote the sale, use or other dealings in
+ * this Software without prior written authorization from Jan Friesse.
  *
  */
 
@@ -73,7 +73,7 @@ void __gtkglut_lowmem(void) {
 /*Show user defined error and exit apllication*/
 void __gtkglut_error(char *func_name,char *fmt,...) {
   va_list args;
-  
+
   va_start( args, fmt );
   fprintf(stderr, "GtkGLUT Error ");
   fprintf(stderr, "(%s): ",func_name);
@@ -87,7 +87,7 @@ void __gtkglut_error(char *func_name,char *fmt,...) {
 /*Show user defined warning*/
 void __gtkglut_warning(char *func_name,char *fmt,...) {
   va_list args;
-  
+
   va_start( args, fmt );
   fprintf(stderr, "GtkGLUT Warning ");
   fprintf(stderr, "(%s): ",func_name);
@@ -106,16 +106,16 @@ void __gtkglut_test_inicialization(char *func_name) {
 void __gtkglut_init_cursors_cache(void) {
   __gtkglut_cursors_cache_struct *res;
   unsigned int i;
-  
+
   res=(__gtkglut_cursors_cache_struct *)malloc(sizeof(__gtkglut_cursors_cache_default));
-  if (!res) 
+  if (!res)
     __gtkglut_lowmem();
 
   for (i=0;i<sizeof(__gtkglut_cursors_cache_default)/sizeof(__gtkglut_cursors_cache_default[0]);i++) {
     res[i]=__gtkglut_cursors_cache_default[i];
     res[i].cursor=NULL;
   }
-  
+
   __gtkglut_context->cursors_cache=res;
 }
 
@@ -157,7 +157,7 @@ GdkGLConfigMode __gtkglut_convert_glut_mode_to_gtkglext(int mode) {
   int res;
 
   res=0;
-  
+
   if (mode & GLUT_RGB) res|=GDK_GL_MODE_RGB;
   if (mode & GLUT_RGBA) res|=GDK_GL_MODE_RGBA;
   if (mode & GLUT_INDEX) res|=GDK_GL_MODE_INDEX;

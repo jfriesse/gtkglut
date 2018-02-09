@@ -3,7 +3,7 @@
     \brief Window management methods.
 */
 
-/* 
+/*
  * Window management methods.
  *
  * Copyright (c) 2008 Jan Friesse. All Rights Reserved.
@@ -27,9 +27,9 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *
- * Except as contained in this notice, the name of Jan Friesse shall not be 
- * used in advertising or otherwise to promote the sale, use or other dealings in 
- * this Software without prior written authorization from Jan Friesse. 
+ * Except as contained in this notice, the name of Jan Friesse shall not be
+ * used in advertising or otherwise to promote the sale, use or other dealings in
+ * this Software without prior written authorization from Jan Friesse.
  */
 
 #include "GL/gtkglut.h"
@@ -39,9 +39,9 @@
 GtkWidget *__gtkglut_create_drawing_area(char *func_name) {
   GtkWidget *drawing_area;
   gboolean direct_render;
-  gboolean res;                 
+  gboolean res;
   gboolean is_rgba;
-  
+
   if (__gtkglut_context->actual_gl_config==NULL) {
     __gtkglut_error(func_name,"No appropriate OpenGL-capable visual found.");
   }
@@ -66,8 +66,8 @@ GtkWidget *__gtkglut_create_drawing_area(char *func_name) {
   }
 
   /*Drawing area can get focus*/
-  GTK_WIDGET_SET_FLAGS(drawing_area, GTK_CAN_FOCUS);  
-  
+  GTK_WIDGET_SET_FLAGS(drawing_area, GTK_CAN_FOCUS);
+
   gtk_widget_add_events(drawing_area, GDK_ENTER_NOTIFY_MASK);
 
   return drawing_area;
@@ -85,7 +85,7 @@ void __gtkglut_test_direct_rendering(char *func_name,GtkWidget *drawing_area) {
     __gtkglut_warning(func_name,"Can't create direct OpenGL visual! Decreased to slower indirect rendering.");
     __gtkglut_context->direct_render=__GTKGLUT_DIRECT_RENDER_INDIRECT;
   }
-  
+
   if (!is_direct && __gtkglut_context->direct_render==__GTKGLUT_DIRECT_RENDER_DIRECT) {
     __gtkglut_error(func_name,"Can't create direct OpenGL visual!");
   }
@@ -96,14 +96,14 @@ __gtkglut_window_struct *__gtkglut_get_window_by_id(int window_id) {
 /*    __gtkglut_error("__gtkglut_get_window_by_id","Internal error. Access window %d, which doesn't exists!",window_id);*/
     return NULL;
   }
-  
+
   return (__gtkglut_window_struct*)g_ptr_array_index(__gtkglut_context->window_array,window_id);
-} 
+}
 
 /*! \defgroup window Window Management
 
     There are two kinds of windows available using GtkGLUT:
-        - Top-level windows 
+        - Top-level windows
         - Subwindows
 
     Each window has a unique identifier and OpenGL rendering context.
@@ -111,15 +111,15 @@ __gtkglut_window_struct *__gtkglut_get_window_by_id(int window_id) {
     This section describes the GtkGLUT API interface for creating,
     managing and closing windows.  The section \ref windowcallback
     describes the callback handlers that applications can provide to
-    customise the behaviour of each window.  
+    customise the behaviour of each window.
 
     The desired position and size of a window is specified by
-    glutInitWindowPosition() and glutInitWindowSize().  
+    glutInitWindowPosition() and glutInitWindowSize().
     The display mode is specified by glutInitDisplayMode() or
-    glutInitDisplayString()  
+    glutInitDisplayString()
     including RGBA color, double buffering,
-     depth buffering and stencil buffering. 
-    
+     depth buffering and stencil buffering.
+
     Once created with glutCreateWindow() windows can be controlled using:
 
         - glutShowWindow() show the window
@@ -134,13 +134,13 @@ __gtkglut_window_struct *__gtkglut_get_window_by_id(int window_id) {
         - glutSetCursor() set the window cursor
         - glutWarpPointer() position the window cursor
         - glutSwapBuffers() swap back buffer to the front
-        
+
     A window is closed by calling glutDestroyWindow().
 
     An application may open multiple top-level windows, each with optional
     subwindows.  The <i>current</i> window is usually managed by the GtkGLUT
     event loop, but also be explicitly controlled:
-    
+
         - glutSetWindow() set the current window
         - glutGetWindow() get the current window
 
@@ -203,9 +203,9 @@ void glutSetWindow(int win) {
   GdkGLDrawable *gl_drawable;
   __gtkglut_window_struct *glut_window;
   GtkWidget *drawing_area;
-  
+
   __gtkglut_test_inicialization("glutSetWindow");
-  
+
   if (win<1 || (guint)win>=__gtkglut_context->window_array->len) {
     __gtkglut_warning("glutSetWindow","Attempted on bogus window %d!",win);
     return ;
@@ -217,16 +217,16 @@ void glutSetWindow(int win) {
 
   if (!glut_window) {
     __gtkglut_warning("glutSetWindow","You are trying set window to nonexistent window %d!",win);
-    
+
     return ;
   }
 
   drawing_area=glut_window->drawing_area;
-    
+
   if (__gtkglut_context->current_gl_drawable) {
     gdk_gl_drawable_gl_end(__gtkglut_context->current_gl_drawable);
   }
-    
+
   gl_context=gtk_widget_get_gl_context(drawing_area);
   gl_drawable=gtk_widget_get_gl_drawable(drawing_area);
 
@@ -280,7 +280,7 @@ void __gtkglut_destroy_glut_window(int win) {
   if (glut_window==NULL) {
     __gtkglut_error("internal error","trying destroy nonexistent window %d",win);
   }
-  
+
   if (glutGetWindow()==win) {
     /*if we destroy window in use -> change gl context,drawable*/
     __gtkglut_context->current_window=0;
@@ -292,7 +292,7 @@ void __gtkglut_destroy_glut_window(int win) {
 
   if (glut_window->child_list) {
     elem=glut_window->child_list;
-  
+
     while (elem) {
       /*Destroy child*/
       __gtkglut_destroy_glut_window(GPOINTER_TO_INT(elem->data));
@@ -311,7 +311,7 @@ void __gtkglut_destroy_window(char *func_name,int win) {
   __gtkglut_window_struct *glut_window;
   GtkWidget *widget_to_destroy;
   __gtkglut_window_struct *parent_glut_window;
-  
+
   __gtkglut_test_inicialization(func_name);
 
   glut_window=__gtkglut_get_window_by_id(win);
@@ -320,7 +320,7 @@ void __gtkglut_destroy_window(char *func_name,int win) {
     __gtkglut_warning(func_name,"trying destroy nonexistent window %d",win);
     return;
   }
-  
+
   if (glut_window) {
     if (glut_window->parent_window<0) {
       widget_to_destroy=glut_window->window;
@@ -356,7 +356,7 @@ void __gtkglut_destroy_window(char *func_name,int win) {
 void __gtkglut_destroy_all_windows(void) {
   unsigned int i;
   __gtkglut_window_struct *glut_window;
-  
+
   __gtkglut_test_inicialization("__gtkglut_destroy_all_windows");
 
   for (i=0;i<__gtkglut_context->window_array->len;i++) {
@@ -393,7 +393,7 @@ void glutDestroyWindow(int win) {
     if (__gtkglut_context->action_on_window_close==GLUT_ACTION_EXIT) {
       /*Should be next line, but breaks test8*/
       /*exit(0);*/
-      
+
     } else {
       gtk_main_quit();
     }
@@ -433,11 +433,11 @@ void __gtkglut_window_array_append(__gtkglut_window_struct *glut_window) {
 
 /*GTK+ event called, when size of eventbox widget is changed*/
 void  __gtkglut_eventbox_size_allocate_event(GtkWidget *widget,GtkAllocation *allocation, gpointer data) {
-  int width; 
+  int width;
   int height;
   int window_id;
   __gtkglut_window_struct *glut_window;
-  
+
   width=allocation->width;
   height=allocation->height;
   window_id=GPOINTER_TO_INT(data);
@@ -462,53 +462,53 @@ void __gtkglut_callback_reshape_call(__gtkglut_window_struct *glut_window,int wi
 
 /*GTK+ expose handler for drawingarea*/
 static gboolean __gtkglut_callback_expose_handler(GtkWidget *widget,GdkEventExpose *event,gpointer data) {
-  int width; 
+  int width;
   int height;
   int window_id;
   __gtkglut_window_struct *glut_window;
 
   window_id=GPOINTER_TO_INT(data);
-  
+
   glut_window=__gtkglut_get_window_by_id(window_id);
-  
+
   if (!glut_window->callback_display) {
     __gtkglut_error("glut display callback","You don't set display callback for window %d",window_id);
   }
-  
+
   if (!glut_window->first_displayed) {
     glut_window->first_displayed=TRUE;
 
     width=widget->allocation.width;
     height=widget->allocation.height;
-    
+
     glutSetWindow(window_id);
-      
+
     __gtkglut_callback_reshape_call(glut_window,width,height);
   }
-  
+
   glutSetWindow(window_id);
 
   glut_window->callback_display();
-  
+
   __gtkglut_gl_debug();
 
   glut_window->damaged=FALSE;
-  
+
   return TRUE;
-} 
+}
 
 /*Handler for reshape event, if drawingarea size is changed*/
 void  __gtkglut_callback_reshape_handler(GtkWidget *widget,GtkAllocation *allocation, gpointer data) {
-  int width; 
+  int width;
   int height;
   int window_id;
   __gtkglut_window_struct *glut_window;
-  
+
   width=allocation->width;
   height=allocation->height;
   window_id=GPOINTER_TO_INT(data);
   glut_window=__gtkglut_get_window_by_id(window_id);
-  
+
   glutSetWindow(window_id);
 
   __gtkglut_callback_reshape_call(glut_window,width,height);
@@ -523,16 +523,16 @@ void __gtkglut_change_window_status(int window_id,gboolean visible,int status,gb
   GSList *elem;
 
   call_visibility_callback=call_status_callback=FALSE;
-  
+
   glut_window=__gtkglut_get_window_by_id(window_id);
 
   if (!glut_window) {
-    __gtkglut_warning("__gtkglut_change_window_visibility","Internal error. Attempt on bogus window %d",window_id); 
+    __gtkglut_warning("__gtkglut_change_window_visibility","Internal error. Attempt on bogus window %d",window_id);
   } else {
     if (visible) {
       if (!glut_window->window_visible || glut_window->window_visible==__GTKGLUT_UNDEFINED)
         call_visibility_callback=TRUE;
-    
+
       glut_window->window_visible=TRUE;
       callback_value=GLUT_VISIBLE;
     } else {
@@ -548,7 +548,7 @@ void __gtkglut_change_window_status(int window_id,gboolean visible,int status,gb
       callback_value=status;
       call_status_callback=TRUE;
     }
-    
+
     if (glut_window->signal_visibility.glut_callback_handler && call_visibility_callback) {
       glutSetWindow(window_id);
 
@@ -581,7 +581,7 @@ void __gtkglut_change_window_status(int window_id,gboolean visible,int status,gb
 gboolean __gtkglut_window_state_handler(GtkWidget *widget, GdkEventWindowState *event, gpointer data)  {
   int window_id;
   __gtkglut_window_struct *glut_window;
-  
+
   window_id=GPOINTER_TO_INT(data);
 
   if (event->changed_mask & GDK_WINDOW_STATE_WITHDRAWN) {
@@ -596,11 +596,11 @@ gboolean __gtkglut_window_state_handler(GtkWidget *widget, GdkEventWindowState *
     glut_window=__gtkglut_get_window_by_id(window_id);
 
     if (!glut_window) {
-      __gtkglut_warning("__gtkglut_window_state_handler","Internal error. Attempt on bogus window %d",window_id); 
+      __gtkglut_warning("__gtkglut_window_state_handler","Internal error. Attempt on bogus window %d",window_id);
     } else {
       glut_window->iconified=(event->new_window_state& GDK_WINDOW_STATE_ICONIFIED)?TRUE:FALSE;
     }
-  
+
   }
   return TRUE;
 }
@@ -609,19 +609,19 @@ gboolean __gtkglut_window_state_handler(GtkWidget *widget, GdkEventWindowState *
 gboolean __gtkglut_callback_visibility_notify_handler(GtkWidget *widget,GdkEventVisibility *event,gpointer data) {
   int window_id;
   int status;
-  
+
   window_id=GPOINTER_TO_INT(data);
-  
+
   status=GLUT_FULLY_COVERED;
 
   switch (event->state) {
-    case GDK_VISIBILITY_FULLY_OBSCURED: status=GLUT_FULLY_COVERED;break;  
+    case GDK_VISIBILITY_FULLY_OBSCURED: status=GLUT_FULLY_COVERED;break;
     case GDK_VISIBILITY_PARTIAL: status=GLUT_PARTIALLY_RETAINED; break;
-    case GDK_VISIBILITY_UNOBSCURED: status=GLUT_FULLY_RETAINED;break; 
+    case GDK_VISIBILITY_UNOBSCURED: status=GLUT_FULLY_RETAINED;break;
   }
-  
+
   __gtkglut_change_window_status(window_id,!(event->state& GDK_VISIBILITY_FULLY_OBSCURED),status,FALSE);
-  
+
   return TRUE;
 }
 
@@ -629,7 +629,7 @@ gboolean __gtkglut_callback_visibility_notify_handler(GtkWidget *widget,GdkEvent
 gboolean __gtkglut_toplevel_window_delete_event(GtkWidget *widget,GdkEvent  *event, gpointer data) {
   int window_id;
   __gtkglut_window_struct *glut_window;
-  
+
   window_id=GPOINTER_TO_INT(data);
 
   glut_window=__gtkglut_get_window_by_id(window_id);
@@ -646,7 +646,7 @@ gboolean __gtkglut_toplevel_window_delete_event(GtkWidget *widget,GdkEvent  *eve
 
       case GLUT_ACTION_GLUTMAINLOOP_RETURNS:
         __gtkglut_destroy_window("__gtkglut_toplevel_window_delete_event",window_id);
-        
+
         gtk_main_quit();
       break;
 
@@ -673,14 +673,14 @@ gboolean __gtkglut_callback_key_handler(GtkWidget *widget,GdkEventKey *event,gpo
   int special_key;
   /*GTK event->string handles almost everything but ... there is problem with Tab, Delete and Backspace key.
     This variable hold 0 if user didn't press this keys, otherwise code for Tab, Delete or Backspace.*/
-  char tbd_key; 
-    
+  char tbd_key;
+
   window_id=GPOINTER_TO_INT(data);
 
   glut_window=__gtkglut_get_window_by_id(window_id);
 
   if (!glut_window) {
-    __gtkglut_warning("__gtkglut_callback_keypress_handler","Internal error. Attempt on bogus window %d",window_id); 
+    __gtkglut_warning("__gtkglut_callback_keypress_handler","Internal error. Attempt on bogus window %d",window_id);
   } else {
     if (event->type==GDK_KEY_PRESS) {
       special_func=((void (*)(int key, int x, int y))glut_window->signal_keyboard_special.glut_callback_handler);
@@ -694,7 +694,7 @@ gboolean __gtkglut_callback_key_handler(GtkWidget *widget,GdkEventKey *event,gpo
       gdk_window_get_pointer (glut_window->drawing_area->window,&mouse_x,&mouse_y,NULL);
 
       tbd_key=0;
-      
+
       if (event->length<=0) {
         /*Handle tbd key*/
         switch (event->keyval) {
@@ -703,7 +703,7 @@ gboolean __gtkglut_callback_key_handler(GtkWidget *widget,GdkEventKey *event,gpo
           case GDK_BackSpace: tbd_key=8;break;
         }
       }
-      
+
       /*We use deprecated code, but ... this is only possibility how to do this*/
       if (event->length>0 || tbd_key) {
         if (keyboard_func) {
@@ -714,7 +714,7 @@ gboolean __gtkglut_callback_key_handler(GtkWidget *widget,GdkEventKey *event,gpo
             keyboard_func(tbd_key,mouse_x,mouse_y);
           else
             keyboard_func(event->string[0],mouse_x,mouse_y);
-          
+
           __gtkglut_context->keyboard_modifiers=__GTKGLUT_UNDEFINED;
         }
       } else {
@@ -734,7 +734,7 @@ gboolean __gtkglut_callback_key_handler(GtkWidget *widget,GdkEventKey *event,gpo
           case GDK_F10: special_key=GLUT_KEY_F10;break;
           case GDK_F11: special_key=GLUT_KEY_F11;break;
           case GDK_F12: special_key=GLUT_KEY_F12;break;
-            
+
           case GDK_Left:case GDK_KP_Left: special_key=GLUT_KEY_LEFT;break;
           case GDK_Right:case GDK_KP_Right: special_key=GLUT_KEY_RIGHT;break;
           case GDK_Up:case GDK_KP_Up: special_key=GLUT_KEY_UP;break;
@@ -756,7 +756,7 @@ gboolean __gtkglut_callback_key_handler(GtkWidget *widget,GdkEventKey *event,gpo
       }
     }
   }
-  
+
   __gtkglut_gl_debug();
 
   return TRUE;
@@ -772,16 +772,16 @@ gboolean __gtkglut_callback_mouse_press_handler(GtkWidget *widget,GdkEventButton
   int state;
    __gtkglut_menu_struct *glut_menu;
   GtkWidget *gtk_menu;
-  
+
   window_id=GPOINTER_TO_INT(data);
 
   glut_window=__gtkglut_get_window_by_id(window_id);
 
   if (!glut_window) {
-    __gtkglut_warning("__gtkglut_callback_mouse_press","Internal error. Attempt on bogus window %d",window_id); 
+    __gtkglut_warning("__gtkglut_callback_mouse_press","Internal error. Attempt on bogus window %d",window_id);
   } else {
     button=__GTKGLUT_UNDEFINED;
-      
+
     switch (event->button) {
       case 1: button=GLUT_LEFT_BUTTON;break;
       case 2: button=GLUT_MIDDLE_BUTTON;break;
@@ -791,7 +791,7 @@ gboolean __gtkglut_callback_mouse_press_handler(GtkWidget *widget,GdkEventButton
     }
 
     state=__GTKGLUT_UNDEFINED;
-      
+
     switch (event->type) {
       case GDK_BUTTON_PRESS: state=GLUT_DOWN;break;
       case GDK_BUTTON_RELEASE: state=GLUT_UP;break;
@@ -800,7 +800,7 @@ gboolean __gtkglut_callback_mouse_press_handler(GtkWidget *widget,GdkEventButton
 
     if (button!=__GTKGLUT_UNDEFINED && state!=__GTKGLUT_UNDEFINED) {
       menu_id=glut_window->mouse_button_menu[button];
-      
+
       /*Test if window have registered menu*/
       if (menu_id) {
         /*We have menu for this button*/
@@ -813,16 +813,16 @@ gboolean __gtkglut_callback_mouse_press_handler(GtkWidget *widget,GdkEventButton
           __gtkglut_set_menu_in_use(glut_menu,TRUE);
 
           glut_menu->popuped_from_window_id=window_id;
-          
+
           __gtkglut_context->current_active_menu_window_id=window_id;
-          
+
           __gtkglut_call_menu_status_func(GLUT_MENU_IN_USE,(int)event->x,(int)event->y,window_id,menu_id);
           /*Show glut menu*/
           gtk_menu=__gtkglut_regenerate_menu(menu_id,0);
 
           if (gtk_menu)
             gtk_menu_popup (GTK_MENU(gtk_menu), NULL, NULL, NULL, NULL,event->button, event->time);
-        }                 
+        }
       } else {
         /*Test if user have callback*/
         if (glut_window->signal_mouse_press.glut_callback_handler) {
@@ -858,7 +858,7 @@ gboolean __gtkglut_callback_mouse_wheel_handler(GtkWidget *widget,GdkEventScroll
   glut_window=__gtkglut_get_window_by_id(window_id);
 
   if (!glut_window) {
-    __gtkglut_warning("__gtkglut_callback_mouse_wheel","Internal error. Attempt on bogus window %d",window_id); 
+    __gtkglut_warning("__gtkglut_callback_mouse_wheel","Internal error. Attempt on bogus window %d",window_id);
   } else {
     if (glut_window->signal_mouse_wheel.glut_callback_handler) {
       callback_func=(void (*)(int wheel, int direction, int x, int y))glut_window->signal_mouse_wheel.glut_callback_handler;
@@ -869,7 +869,7 @@ gboolean __gtkglut_callback_mouse_wheel_handler(GtkWidget *widget,GdkEventScroll
         case GDK_SCROLL_LEFT:wheel=1;direction=GLUT_WHEEL_UP;break;
         case GDK_SCROLL_RIGHT:wheel=1;direction=GLUT_WHEEL_DOWN;break;
       }
-      
+
         __gtkglut_context->keyboard_modifiers=event->state;
         glutSetWindow(window_id);
         callback_func(wheel,direction,(int)event->x,(int)event->y);
@@ -893,7 +893,7 @@ gboolean __gtkglut_callback_motion_handler(GtkWidget *widget,GdkEventMotion *eve
   glut_window=__gtkglut_get_window_by_id(window_id);
 
   if (!glut_window) {
-    __gtkglut_warning("__gtkglut_callback_motion","Internal error. Attempt on bogus window %d",window_id); 
+    __gtkglut_warning("__gtkglut_callback_motion","Internal error. Attempt on bogus window %d",window_id);
   } else {
     /*Call active or passive callback*/
     if (event->state&GDK_BUTTON1_MASK || event->state&GDK_BUTTON2_MASK || event->state&GDK_BUTTON3_MASK ||
@@ -910,10 +910,10 @@ gboolean __gtkglut_callback_motion_handler(GtkWidget *widget,GdkEventMotion *eve
       __gtkglut_context->keyboard_modifiers=__GTKGLUT_UNDEFINED;
     }
   }
-  
+
   __gtkglut_gl_debug();
 
-  return TRUE;  
+  return TRUE;
 }
 
 /*GTK+ drawing_area mouse enter/leave handler*/
@@ -922,7 +922,7 @@ gboolean __gtkglut_callback_enter_leave_handler(GtkWidget *widget,GdkEventCrossi
   __gtkglut_window_struct *glut_window;
   void (*callback_func)(int state);
   int state;
-  
+
   window_id=GPOINTER_TO_INT(data);
 
   glut_window=__gtkglut_get_window_by_id(window_id);
@@ -931,7 +931,7 @@ gboolean __gtkglut_callback_enter_leave_handler(GtkWidget *widget,GdkEventCrossi
   gtk_widget_grab_focus(widget);
 
   if (!glut_window) {
-    __gtkglut_warning("__gtkglut_callback_enter_leave","Internal error. Attempt on bogus window %d",window_id); 
+    __gtkglut_warning("__gtkglut_callback_enter_leave","Internal error. Attempt on bogus window %d",window_id);
   } else {
     /*Call active or passive callback*/
     if (event->type==GDK_ENTER_NOTIFY)
@@ -946,10 +946,10 @@ gboolean __gtkglut_callback_enter_leave_handler(GtkWidget *widget,GdkEventCrossi
       callback_func(state);
     }
   }
-  
+
   __gtkglut_gl_debug();
 
-  return TRUE;  
+  return TRUE;
 }
 
 /*Create window. Universal function for creating toplevel (parent<0) and sub windows*/
@@ -962,12 +962,12 @@ int __gtkglut_create_window(char *func_name,int parent,__gtkglut_geometry_struct
   GtkWidget *event_box;
   __gtkglut_window_struct *parent_glut_window;
   int i;
-  
+
   window=NULL;
   parent_glut_window=NULL;
 
   glut_window=(__gtkglut_window_struct*)malloc(sizeof(__gtkglut_window_struct));
-  if (!glut_window) 
+  if (!glut_window)
     __gtkglut_lowmem();
 
   if (parent<0) {
@@ -1000,11 +1000,11 @@ int __gtkglut_create_window(char *func_name,int parent,__gtkglut_geometry_struct
       __gtkglut_error("glutCreateSubWindow","You are trying create subwindow of nonexistent window %d!",parent);
     }
   }
-  
+
   /*Create eventbox*/
   event_box=gtk_event_box_new();
   gtk_widget_set_size_request(event_box,geom.width,geom.height);
-  
+
   /*Create fixed*/
   fixed=gtk_fixed_new();
 
@@ -1028,7 +1028,7 @@ int __gtkglut_create_window(char *func_name,int parent,__gtkglut_geometry_struct
   gtk_widget_show(drawing_area);
   gtk_widget_show(fixed);
   gtk_widget_show(event_box);
-  
+
   if (parent<0) {
     /*Toplevel*/
     gtk_widget_show(window);
@@ -1060,7 +1060,7 @@ int __gtkglut_create_window(char *func_name,int parent,__gtkglut_geometry_struct
   glut_window->signal_visibility.gtk_event_handler=(void*)__gtkglut_callback_visibility_notify_handler;
   glut_window->signal_visibility.glut_callback_handler=NULL;
   glut_window->signal_visibility.event_added=FALSE;
-  
+
   glut_window->signal_status.gtk_event_handler=(void*)__gtkglut_callback_visibility_notify_handler;
   glut_window->signal_status.glut_callback_handler=NULL;
   glut_window->signal_status.event_added=FALSE;
@@ -1068,11 +1068,11 @@ int __gtkglut_create_window(char *func_name,int parent,__gtkglut_geometry_struct
   glut_window->signal_keyboard.gtk_event_handler=(void*)__gtkglut_callback_key_handler;
   glut_window->signal_keyboard.glut_callback_handler=NULL;
   glut_window->signal_keyboard.event_added=FALSE;
-  
+
   glut_window->signal_keyboard_special.gtk_event_handler=(void*)__gtkglut_callback_key_handler;
   glut_window->signal_keyboard_special.glut_callback_handler=NULL;
   glut_window->signal_keyboard_special.event_added=FALSE;
-  
+
   glut_window->signal_keyboard_up.gtk_event_handler=(void*)__gtkglut_callback_key_handler;
   glut_window->signal_keyboard_up.glut_callback_handler=NULL;
   glut_window->signal_keyboard_up.event_added=FALSE;
@@ -1088,7 +1088,7 @@ int __gtkglut_create_window(char *func_name,int parent,__gtkglut_geometry_struct
   glut_window->signal_mouse_release.gtk_event_handler=(void*)__gtkglut_callback_mouse_press_handler;
   glut_window->signal_mouse_release.glut_callback_handler=NULL;
   glut_window->signal_mouse_release.event_added=FALSE;
-  
+
   glut_window->signal_mouse_wheel.gtk_event_handler=(void*)__gtkglut_callback_mouse_wheel_handler;
   glut_window->signal_mouse_wheel.glut_callback_handler=NULL;
   glut_window->signal_mouse_wheel.event_added=FALSE;
@@ -1096,7 +1096,7 @@ int __gtkglut_create_window(char *func_name,int parent,__gtkglut_geometry_struct
   glut_window->signal_motion.gtk_event_handler=(void*)__gtkglut_callback_motion_handler;
   glut_window->signal_motion.glut_callback_handler=NULL;
   glut_window->signal_motion.event_added=FALSE;
-  
+
   glut_window->signal_passive_motion.gtk_event_handler=(void*)__gtkglut_callback_motion_handler;
   glut_window->signal_passive_motion.glut_callback_handler=NULL;
   glut_window->signal_passive_motion.event_added=FALSE;
@@ -1106,7 +1106,7 @@ int __gtkglut_create_window(char *func_name,int parent,__gtkglut_geometry_struct
   glut_window->signal_entry.event_added=FALSE;
 
   glut_window->callback_close=NULL;
-  
+
   for (i=0;i<__GTKGLUT_MAX_MOUSE_BUTTONS;i++)
     glut_window->mouse_button_menu[i]=0;
 
@@ -1127,7 +1127,7 @@ int __gtkglut_create_window(char *func_name,int parent,__gtkglut_geometry_struct
     g_signal_connect (G_OBJECT (window), "window-state-event",
                     G_CALLBACK (__gtkglut_window_state_handler), GINT_TO_POINTER(window_id));
   }
-  
+
   g_signal_connect(G_OBJECT (event_box),"size_allocate",
       G_CALLBACK(__gtkglut_eventbox_size_allocate_event),GINT_TO_POINTER(window_id));
 
@@ -1140,7 +1140,7 @@ int __gtkglut_create_window(char *func_name,int parent,__gtkglut_geometry_struct
   g_signal_connect (G_OBJECT (drawing_area), "enter-notify-event",
                     G_CALLBACK (__gtkglut_callback_enter_leave_handler), GINT_TO_POINTER(window_id));
 
-  
+
   glutSetWindow(window_id);
 
   return window_id;
@@ -1186,7 +1186,7 @@ int glutCreateWindow(char *name) {
   window_id=__gtkglut_create_window("glutCreateWindow",-1,geom,name);
 
   __gtkglut_context->no_active_toplevel_windows++;
-    
+
   return window_id;
 }
 
@@ -1240,7 +1240,7 @@ int glutCreateSubWindow(int win,int x, int y, int width, int height) {
   int window_id;
 
   __gtkglut_test_inicialization("glutCreateSubWindow");
-  
+
   parent_glut_window=__gtkglut_get_window_by_id(win);
 
   if (!parent_glut_window) {
@@ -1257,7 +1257,7 @@ int glutCreateSubWindow(int win,int x, int y, int width, int height) {
   geom.height=height;
 
   window_id=__gtkglut_create_window("glutCreateSubWindow",win,geom,NULL);
-  
+
   return window_id;
 }
 
@@ -1302,7 +1302,7 @@ void __gtkglut_create_cursor_none(void) {
 
   pixmap = gdk_bitmap_create_from_data(NULL, bits, 1, 1);
   cursor = gdk_cursor_new_from_pixmap(pixmap, pixmap, &color, &color, 0, 0);
-  
+
   __gtkglut_context->cursor_none=cursor;
 }
 
@@ -1361,7 +1361,7 @@ void glutSetCursor(int cursor) {
   GtkWidget *drawing_area;
   GdkCursor *gcursor;
   int cursor_id;
-  
+
   __gtkglut_test_inicialization("glutSetCursor");
 
   glut_window=__gtkglut_get_active_window_with_warning("glutSetCursor");
@@ -1379,31 +1379,31 @@ void glutSetCursor(int cursor) {
     } else {
       cursor_id=cursor;
     }
-  
+
     if (cursor_id>=GLUT_CURSOR_RIGHT_ARROW && cursor_id<=GLUT_CURSOR_BOTTOM_LEFT_CORNER) {
       /*Get cursor from cache*/
       if (!__gtkglut_context->cursors_cache[cursor_id].cursor) {
         __gtkglut_context->cursors_cache[cursor_id].cursor=gdk_cursor_new((GdkCursorType)__gtkglut_context->cursors_cache[cursor_id].gdk_id);
       }
-    
+
       gcursor=__gtkglut_context->cursors_cache[cursor_id].cursor;
     }
-  
+
     if (cursor_id==GLUT_CURSOR_NONE) {
       /*Get cursor from cache*/
       if (!__gtkglut_context->cursor_none) {
         __gtkglut_create_cursor_none();
       }
-    
+
       gcursor=__gtkglut_context->cursor_none;
     }
-  
+
     if (!gcursor && cursor_id!=GLUT_CURSOR_INHERIT) {
       __gtkglut_warning("glutSetCursor","You are trying set undefined cursor %d, GLUT_CURSOR_INHERIT will be used!",cursor);
     } else {
       glut_window->current_cursor=cursor;
     }
-  
+
     gdk_window_set_cursor(drawing_area->window,gcursor);
   }
 }
@@ -1438,11 +1438,11 @@ void glutSetCursor(int cursor) {
 void glutPushWindow(void) {
   __gtkglut_window_struct *glut_window;
   __gtkglut_window_struct *glut_parent_window;
-  
+
   __gtkglut_test_inicialization("glutPushWindow");
 
   glut_window=__gtkglut_get_active_window_with_warning("glutPushWindow");
-  
+
   if (glut_window) {
     if (glut_window->parent_window<0) {
       gdk_window_lower(glut_window->window->window);
@@ -1499,7 +1499,7 @@ void __gtkglut_post_window_redisplay(char *func_name,int win) {
 
   __gtkglut_test_inicialization(func_name);
 
-  glut_window=__gtkglut_get_window_by_id(win);  
+  glut_window=__gtkglut_get_window_by_id(win);
 
   if (!glut_window) {
     __gtkglut_warning(func_name,"attempted on bogus window %d!",win);
@@ -1635,7 +1635,7 @@ void glutPositionWindow(int x, int y) {
       glut_parent_window=__gtkglut_get_window_by_id(glut_window->parent_window);
       gtk_fixed_move(GTK_FIXED(glut_parent_window->fixed),glut_window->event_box,x,y);
     }
-  }  
+  }
 }
 
 /*!
@@ -1670,7 +1670,7 @@ void glutReshapeWindow(int width, int height) {
 
     return ;
   }
-  
+
   if (glut_window) {
     if (glut_window->parent_window<0) {
       __gtkglut_disable_fullscreen();
@@ -1678,7 +1678,7 @@ void glutReshapeWindow(int width, int height) {
     } else {
       gtk_widget_set_size_request(glut_window->event_box,width,height);
     }
-  }  
+  }
 }
 
 /*!
@@ -1712,8 +1712,8 @@ void glutShowWindow(void) {
     } else {
       gtk_widget_show(glut_window->event_box);
     }
-  }  
-  
+  }
+
 }
 
 /*!
@@ -1725,7 +1725,7 @@ void glutShowWindow(void) {
 void glutHideWindow(void) {
   __gtkglut_window_struct *glut_window;
   int old_window_id;
-  
+
   __gtkglut_test_inicialization("glutHideWindow");
 
   glut_window=__gtkglut_get_active_window_with_warning("glutHideWindow");
@@ -1734,13 +1734,13 @@ void glutHideWindow(void) {
     old_window_id=glutGetWindow();
     __gtkglut_change_window_status(glutGetWindow(),FALSE,GLUT_HIDDEN,TRUE);
     glutSetWindow(old_window_id);
-    
+
     if (glut_window->parent_window<0) {
       gtk_widget_hide(glut_window->window);
     } else {
       gtk_widget_hide(glut_window->event_box);
     }
-  }  
+  }
 }
 
 /*!
@@ -1897,7 +1897,7 @@ void glutWarpPointer(int x, int y) {
   GdkDisplay *display;
   GdkScreen *screen;
   gint wx,wy;
-  
+
   __gtkglut_test_inicialization("glutWarpPointer");
 
   glut_window=__gtkglut_get_active_window_with_warning("glutWarpPointer");
@@ -1905,18 +1905,18 @@ void glutWarpPointer(int x, int y) {
   if (glut_window) {
     display=gtk_widget_get_display(glut_window->drawing_area);
     screen=gtk_widget_get_screen(glut_window->drawing_area);
-    
+
     gdk_window_get_root_origin(glut_window->drawing_area->window,&wx,&wy);
-    
+
     wx+=x;
     wy+=y;
-    
+
 #if GTK_MAJOR_VERSION>=2 && GTK_MINOR_VERSION>=8
     gdk_display_warp_pointer(display,screen, wx,wy);
 #else
   __gtkglut_warning("glutWarpPointer","you need GDK >=2.8 for this function (warp to %d %d)",wx,wy);
 #endif
-      
+
   }
 }
 
@@ -1935,7 +1935,7 @@ void glutWarpPointer(int x, int y) {
 */
 void glutSetWindowData(void *data) {
   __gtkglut_window_struct *glut_window;
-  
+
   __gtkglut_test_inicialization("glutSetWindowData");
 
   glut_window=__gtkglut_get_active_window_with_warning("glutSetWindowData");
@@ -1943,7 +1943,7 @@ void glutSetWindowData(void *data) {
   if (glut_window) {
     glut_window->user_data=data;
   }
-} 
+}
 
 /*!
     \brief    Get the user data for the current window
@@ -1965,11 +1965,11 @@ void glutSetWindowData(void *data) {
 void *glutGetWindowData(void) {
   __gtkglut_window_struct *glut_window;
   void *res;
-  
+
   __gtkglut_test_inicialization("glutGetWindowData");
 
   res=NULL;
-  
+
   glut_window=__gtkglut_get_active_window_with_warning("glutGetWindowData");
 
   if (glut_window) {

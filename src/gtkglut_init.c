@@ -3,7 +3,7 @@
     \brief Initialization
 */
 
-/* 
+/*
  * Initialization methods.
  *
  * Copyright (c) 2008 Jan Friesse. All Rights Reserved.
@@ -27,9 +27,9 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *
- * Except as contained in this notice, the name of Jan Friesse shall not be 
- * used in advertising or otherwise to promote the sale, use or other dealings in 
- * this Software without prior written authorization from Jan Friesse. 
+ * Except as contained in this notice, the name of Jan Friesse shall not be
+ * used in advertising or otherwise to promote the sale, use or other dealings in
+ * this Software without prior written authorization from Jan Friesse.
  *
  * Contains some little modified code from FreeGLUT, see COPYING file
  */
@@ -58,7 +58,7 @@ void glutInitWindowSize(int width, int height) {
   if (!__gtkglut_context) {
     __gtkglut_context_init();
   }
-  
+
   if (width>0)
     __gtkglut_context->window_init_geometry.width=width;
   if (height>0)
@@ -83,7 +83,7 @@ void glutInitWindowPosition(int x, int y) {
   }
 
   __gtkglut_context->window_init_geometry.x=x;
-  __gtkglut_context->window_init_geometry.y=y;   
+  __gtkglut_context->window_init_geometry.y=y;
 }
 
 /*!
@@ -133,7 +133,7 @@ void glutInitWindowPosition(int x, int y) {
 */
 void glutSetOption(int what,int value) {
   int x,y;
-  
+
   switch (what) {
     case GLUT_INIT_DISPLAY_MODE:
       glutInitDisplayMode(value);
@@ -146,16 +146,16 @@ void glutSetOption(int what,int value) {
     case GLUT_INIT_WINDOW_HEIGHT:
       glutInitWindowSize(-1,value);
     break;
-    
+
     case GLUT_INIT_WINDOW_X:
     case GLUT_INIT_WINDOW_Y:
       if (!__gtkglut_context) {
         __gtkglut_context_init();
-      }  
+      }
 
       x=(what==GLUT_INIT_WINDOW_X)?what:__gtkglut_context->window_init_geometry.x;
       y=(what==GLUT_INIT_WINDOW_Y)?what:__gtkglut_context->window_init_geometry.y;
-      
+
       glutInitWindowPosition(x,y);
     break;
 
@@ -166,8 +166,8 @@ void glutSetOption(int what,int value) {
     case GLUT_ACTION_ON_WINDOW_CLOSE:
       if (!__gtkglut_context) {
         __gtkglut_context_init();
-      }  
-      
+      }
+
       __gtkglut_context->action_on_window_close=value;
     break;
   }
@@ -177,10 +177,10 @@ void glutSetOption(int what,int value) {
 void __gtkglut_remove_null_params(int *argcp,char **argv) {
   int fromp,top;
   int newargc;
-  
+
   fromp=top=0;
   newargc=*argcp;
-  
+
   while (fromp<*argcp) {
     if (argv[fromp]!=NULL) {
       argv[top]=argv[fromp];
@@ -221,7 +221,7 @@ GSList *__gtkglut_parse_params(int *argcp,char **argv,__gtkglut_geometry_struct 
 
   i=0;
   new_str_list=NULL;
-  
+
   while (i<*argcp) {
     if (argv[i] && strcmp(argv[i],"-display")==0) {
       /*Parameter -display convert to --display*/
@@ -239,32 +239,32 @@ GSList *__gtkglut_parse_params(int *argcp,char **argv,__gtkglut_geometry_struct 
 
       if (i+1<*argcp) {
         i++;
-     
+
         if (!(*geometry)) {
           (*geometry)=(__gtkglut_geometry_struct *)malloc(sizeof(__gtkglut_geometry_struct));
           if (!(*geometry))
             __gtkglut_lowmem();
         }
-     
+
         x=glutGet(GLUT_INIT_WINDOW_X);
         y=glutGet(GLUT_INIT_WINDOW_Y);
         w=glutGet(GLUT_INIT_WINDOW_WIDTH);
         h=glutGet(GLUT_INIT_WINDOW_HEIGHT);
 
         sscanf(argv[i],"%dx%d%d%d",&w,&h,&x,&y);
-      
+
         (*geometry)->x=x;
         (*geometry)->y=y;
         (*geometry)->width=w;
         (*geometry)->height=h;
-      
+
         /*Geometry we must process in two stages. First, get parameters, second, we
           may need screen_width (for values <0), but gdk_... is avaliable only after
           gtk_init*/
         argv[i]=NULL;
       }
     }
-    
+
     if (argv[i] && strcmp(argv[i],"-sync")==0) {
       /*Parameter -sync convert to --sync*/
       tmpstr=g_strdup("--sync");
@@ -296,7 +296,7 @@ GSList *__gtkglut_parse_params(int *argcp,char **argv,__gtkglut_geometry_struct 
 
     i++;
   }
-  
+
   __gtkglut_remove_null_params(argcp,argv);
   return new_str_list;
 }
@@ -304,7 +304,7 @@ GSList *__gtkglut_parse_params(int *argcp,char **argv,__gtkglut_geometry_struct 
 void __gtkglut_free_params(int *argcp,char **argv,GSList **list) {
   int i;
   GSList *elem;
-  
+
   /*Try to find element, which is in list, and in argv -> item isn't processed
     (for example MS Windows and -display)*/
   for (i=0;i<*argcp;i++) {
@@ -316,7 +316,7 @@ void __gtkglut_free_params(int *argcp,char **argv,GSList **list) {
         argv[i]=NULL;
         i++;
       }
-      
+
       argv[i]=NULL;
     }
   }
@@ -401,7 +401,7 @@ void glutInitDisplayMode(unsigned int mode) {
   if (!__gtkglut_context) {
     __gtkglut_context_init();
   }
-  
+
   __gtkglut_context->display_mode=mode;
 
   if (__gtkglut_context->is_inicialized) {
@@ -553,12 +553,12 @@ void glutInitDisplayString(char* string) {
   int len;
   char *buffer;
   unsigned int i;
-  
+
   if (!string) return ;
 
   len=strlen(string);
   buffer=g_strdup(string);
-  
+
   token =strtok(buffer," \t");
   while (token) {
     /* Process this token */
@@ -777,11 +777,11 @@ void glutInitDisplayString(char* string) {
               glutCreateWindow(), glutDisplayFunc(),
               glutMainLoop(), glutMainLoopEvent(), glutReportErrors(),
               glutSwapBuffers()
-*/            
+*/
 void glutInit(int *argcp, char **argv) {
   GSList *new_str_list;
   __gtkglut_geometry_struct *geometry;
-  
+
   /*Initialize context only if needed*/
   if (!__gtkglut_context) {
     __gtkglut_context_init();
