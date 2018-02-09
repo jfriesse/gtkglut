@@ -1,12 +1,12 @@
-/*
-    \file  gtkglut_font_data.c
-    \brief Bitmapped font data for GtkGLUT fonts.
-*/
+/*!
+ * \file  gtkglut_font_data.c
+ * \brief Bitmapped font data for GtkGLUT fonts.
+ */
 
-/* 
+/*
  * GtkGLUT Bitmapped font data.
  *
- * Copyright (c) 2008 Jan Friesse. All Rights Reserved.
+ * Copyright (c) 2008-2018 Jan Friesse. All Rights Reserved.
  * Written by Jan Friesse, <jfriesse@gmail.comt>
  * Creation date: Sun Mar 16 2008
  *
@@ -87,7 +87,7 @@
 
 /*
  * The following bitmapped fonts are defined in this file:
- * 
+ *
  * 1. fgFontFixed8x13
  *       -misc-Fixed-medium-r-normal--13-120-75-75-C-80-iso8859-1
  * 2. fgFontFixed9x15
@@ -2049,4 +2049,3 @@ static const GLubyte* __gtkglut_TimesRoman24_Character_Map[] = {__gtkglut_TimesR
 
 /* The font structure: */
 __gtkglut_SFG_Font __gtkglut_fgFontTimesRoman24 = { "-adobe-Times-medium-r-normal--24-240-75-75-p-124-iso8859-1", 256, 29, __gtkglut_TimesRoman24_Character_Map, 0, 7 };
-

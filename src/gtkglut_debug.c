@@ -1,12 +1,12 @@
 /*!
-    \file gtkglut_debug.c
-    \brief OpenGL debug functions.
-*/
+ * \file gtkglut_debug.c
+ * \brief OpenGL debug functions.
+ */
 
-/* 
+/*
  * GtkGLUT OpenGL debug functions.
  *
- * Copyright (c) 2008 Jan Friesse. All Rights Reserved.
+ * Copyright (c) 2008-2018 Jan Friesse. All Rights Reserved.
  * Written by Jan Friesse, <jfriesse@gmail.comt>
  * Creation date: Sun Mar 16 2008
  *
@@ -36,31 +36,33 @@
 #include "GL/gtkglut.h"
 #include "gtkglut_internal.h"
 
-
-/*! \defgroup opengl OpenGL Utilities
-*/
+/*!
+ * \defgroup opengl OpenGL Utilities
+ */
 
 /*!
-    \brief    Reports all available OpenGL errors.
-    \ingroup  opengl
-
-              Displays as an GtkGLUT warning every OpenGL error
-              that OpenGL remembers giving to us and which
-              we have not processed.  Uses gluErrorString().
-
-              This is forcibly done by GtkGLUT periodically
-              if \a -gldebug is one of the strings passed into
-              glutInit() via \a argv.
-
-    \see      gluErrorString(), glutInit()
+ * \brief    Reports all available OpenGL errors.
+ * \ingroup  opengl
+ *
+ * Displays as an GtkGLUT warning every OpenGL error
+ * that OpenGL remembers giving to us and which
+ * we have not processed.  Uses gluErrorString().
+ *
+ * This is forcibly done by GtkGLUT periodically
+ * if \a -gldebug is one of the strings passed into
+ * glutInit() via \a argv.
+ *
+ * \see gluErrorString(), glutInit()
 */
-void glutReportErrors(void) {
-  GLenum err;
+void glutReportErrors(void)
+{
+	GLenum err;
 
-  err=glGetError();
+	err = glGetError();
 
-  while (err != GL_NO_ERROR) { \
-    __gtkglut_warning("glDebug", "error %d occured: %s", (int)err,(char *)gluErrorString(err));
-    err = glGetError();
-  }
+	while (err != GL_NO_ERROR) {
+		__gtkglut_warning("glDebug", "error %d occured: %s", (int)err,
+				  (char *)gluErrorString(err));
+		err = glGetError();
+	}
 }
