@@ -1,12 +1,12 @@
 /*!
-    \file  gtkglut_refset.c
-    \brief GtkGLUT refset ADS.
-*/
+ * \file  gtkglut_refset.c
+ * \brief GtkGLUT refset ADS.
+ */
 
 /*
  * GtkGLUT refset ADS.
  *
- * Copyright (c) 2008 Jan Friesse. All Rights Reserved.
+ * Copyright (c) 2008-2018 Jan Friesse. All Rights Reserved.
  * Written by Jan Friesse, <jfriesse@gmail.comt>
  * Creation date: Sun Mar 16 2008
  *
@@ -36,93 +36,106 @@
 #include "GL/gtkglut.h"
 #include "gtkglut_internal.h"
 
-/*Special ADS for menu. We must be notified, if some menu changes, and we must
-  allow user to attach menu more time to other menu -> we need reference counting*/
+/*
+ * Special ADS for menu. We must be notified, if some menu changes, and we must
+ * allow user to attach menu more time to other menu -> we need reference counting
+ */
 
-/*Make reference in refset list to ref pointer*/
-GList *__gtkglut_refset_ref(GList *list,gpointer ref) {
-  GList *elem;
-  __gtkglut_refset_item *item;
-  gboolean found;
+/*
+ * Make reference in refset list to ref pointer
+ */
+GList *__gtkglut_refset_ref(GList * list, gpointer ref)
+{
+	GList *elem;
+	__gtkglut_refset_item *item;
+	gboolean found;
 
-  found=FALSE;
-  elem=list;
+	found = FALSE;
+	elem = list;
 
-  while (elem && !found) {
-    item=(__gtkglut_refset_item*)elem->data;
+	while (elem && !found) {
+		item = (__gtkglut_refset_item *) elem->data;
 
-    if (item->ref==ref) {
-      found=TRUE;
-    }
+		if (item->ref == ref) {
+			found = TRUE;
+		}
 
-    elem=g_list_next(elem);
-  }
+		elem = g_list_next(elem);
+	}
 
-  if (found) {
-    item->value++;
-  } else {
-    item=(__gtkglut_refset_item*)malloc(sizeof(__gtkglut_refset_item));
+	if (found) {
+		item->value++;
+	} else {
+		item = (__gtkglut_refset_item *) malloc(sizeof(__gtkglut_refset_item));
 
-    if (!item) __gtkglut_lowmem();
+		if (!item)
+			__gtkglut_lowmem();
 
-    item->ref=ref;
-    item->value=1;
+		item->ref = ref;
+		item->value = 1;
 
-    list=g_list_append(list,item);
-  }
+		list = g_list_append(list, item);
+	}
 
-  return list;
+	return list;
 }
 
-/*Dec reference in refset list to ref pointer. If reference count is 0 -> remove item from list*/
-GList *__gtkglut_refset_unref(GList *list,gpointer ref) {
-  GList *elem;
-  __gtkglut_refset_item *item;
-  gboolean found;
+/*
+ * Dec reference in refset list to ref pointer. If reference count is 0 -> remove item from list
+ */
+GList *__gtkglut_refset_unref(GList * list, gpointer ref)
+{
+	GList *elem;
+	__gtkglut_refset_item *item;
+	gboolean found;
 
-  found=FALSE;
-  elem=list;
+	found = FALSE;
+	elem = list;
 
-  while (elem && !found) {
-    item=(__gtkglut_refset_item*)elem->data;
+	while (elem && !found) {
+		item = (__gtkglut_refset_item *) elem->data;
 
-    if (item->ref==ref) {
-      found=TRUE;
-    }
+		if (item->ref == ref) {
+			found = TRUE;
+		}
 
-    elem=g_list_next(elem);
-  }
+		elem = g_list_next(elem);
+	}
 
-  if (found) {
-    item->value--;
+	if (found) {
+		item->value--;
 
-    if (item->value<=0) {
-      list=g_list_remove(list,item);
-      free(item);
-    }
-  }
+		if (item->value <= 0) {
+			list = g_list_remove(list, item);
+			free(item);
+		}
+	}
 
-  return list;
+	return list;
 }
 
-/*Destroy refset ADS*/
-GList *__gtkglut_refset_destroy(GList *list) {
-  GList *elem;
-  __gtkglut_refset_item *item;
+/*
+ * Destroy refset ADS
+ */
+GList *__gtkglut_refset_destroy(GList * list)
+{
+	GList *elem;
+	__gtkglut_refset_item *item;
 
-  elem=list;
+	elem = list;
 
-  while (elem) {
-    item=(__gtkglut_refset_item*)elem->data;
+	while (elem) {
+		item = (__gtkglut_refset_item *) elem->data;
 
-    free(item);
+		free(item);
 
-    elem=g_list_next(elem);
-  }
+		elem = g_list_next(elem);
+	}
 
-  /*All childs data are destroyed, destroy list*/
-  g_list_free(list);
+	/*
+	 * All childs data are destroyed, destroy list
+	 */
+	g_list_free(list);
 
-  return NULL;
+	return NULL;
 }
-

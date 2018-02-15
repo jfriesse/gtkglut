@@ -1,12 +1,12 @@
 /*!
-    \file  gtkglut_stroke_roman.c
-    \brief GtkGLUT Roman stroke font definition.
-*/
+ * \file  gtkglut_stroke_roman.c
+ * \brief GtkGLUT Roman stroke font definition.
+ */
 
 /*
  * GtkGLUT Roman stroke font definition.
  *
- * Copyright (c) 2008 Jan Friesse. All Rights Reserved.
+ * Copyright (c) 2008-2018 Jan Friesse. All Rights Reserved.
  * Written by Jan Friesse, <jfriesse@gmail.comt>
  * Creation date: Sun Mar 16 2008
  *

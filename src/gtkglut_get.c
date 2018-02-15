@@ -30,7 +30,6 @@
  * Except as contained in this notice, the name of Jan Friesse shall not be
  * used in advertising or otherwise to promote the sale, use or other dealings in
  * this Software without prior written authorization from Jan Friesse.
- *
  */
 
 #include "GL/gtkglut.h"
