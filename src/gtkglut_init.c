@@ -127,8 +127,8 @@ void glutInitWindowPosition(int x, int y)
  *   Set the initial vertical position of new windows.
  *
  * - \a GLUT_WINDOW_CURSOR \n
- *   Attempt to set the <i>current window</i>'s current cursor
- *   as if by glutSetCursor().
+ *   Attempt to set the current cursor of *current window*
+ *   as by calling glutSetCursor().
  *
  * \see glutGet(), glutDeviceGet(), glutGetModifiers(),
  *      glutLayerGet(), glutDestroyWindow(), glutMainLoop(),
@@ -778,9 +778,9 @@ void glutInitDisplayString(char *string)
  * recognizes in the command line.  The following
  * command-line parameters are suported:
  *
- * - \a -display <i>display-id</i>
+ * - \a -display *display-id*
  *   This allows connection to an alternate X server.
- * - \a -geometry <i>geometry-spec</i>
+ * - \a -geometry *geometry-spec*
  *   This takes width, height, and
  *   window position.  The position is given as
  *   a signed value (negative values being distance

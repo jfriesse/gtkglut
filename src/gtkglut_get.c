@@ -514,7 +514,7 @@ int glutGetModifiers(void)
  * - \a GLUT_TRANSPARENT_INDEX \n
  *   Returns -1 if no layer in use.
  *
- * All information relates to the <i>current window</i>
+ * All information relates to the *current window*
  * and any overlay that it may have.
  *
  * \note GtkGLUT does not support overlays.
@@ -606,7 +606,7 @@ int glutLayerGet(GLenum info)
  *   successfully acquired access to the joystick.
  *
  * - \a GLUT_DEVICE_IGNORE_KEY_REPEAT \n
- *   Return non-zero if the <i>current window</i> is
+ *   Return non-zero if the *current window* is
  *   set to disable key repeating.
  *
  * - \a GLUT_DEVICE_KEY_REPEAT \n

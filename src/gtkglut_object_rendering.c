@@ -208,7 +208,7 @@ void glutWireCone(GLdouble base, GLdouble height, GLint slices, GLint stacks)
  * The torus parameters can be explored interactively
  * with the GtkGLUT shapes demo.
  *
- * \note \a dInnerRadius and \a dOuterRadius are <b>not</b>
+ * \note \a dInnerRadius and \a dOuterRadius are **not**
  *       analogous to similar measurements of an anulus.
  *
  * \see glutWireTorus()
@@ -238,7 +238,7 @@ void glutSolidTorus(GLdouble innerRadius, GLdouble outerRadius, GLint nsides, GL
  * The torus parameters can be explored interactively
  * with the GtkGLUT shapes demo.
  *
- * \note \a dInnerRadius and \a dOuterRadius are <b>not</b>
+ * \note \a dInnerRadius and \a dOuterRadius are **not**
  *       analogous to similar measurements of an anulus.
  *
  * \see glutSolidTorus()

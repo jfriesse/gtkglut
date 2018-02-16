@@ -936,7 +936,7 @@ void glutRemoveMenuItem(int entry)
  * \param    data    Client pointer data
  *
  * glutSetMenuData() associates an arbitrary user
- * data pointer, \a data, with the <i>current menu</i>.
+ * data pointer, \a data, with the *current menu*.
  * GtkGLUT does not interpret this pointer in any way, but
  * merely stores it for you in the menu structure.
  *

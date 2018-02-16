@@ -1,14 +1,14 @@
 /*!
-    \file  glut.h
-    \brief Original GLUT compatibility header.
-    
-    \include glut.h
-*/
+ * \file  glut.h
+ * \brief Original GLUT compatibility header.
+ *
+ * \include glut.h
+ */
 
-/* 
+/*
  * Original GLUT compatibility header.
  *
- * Copyright (c) 2008 Jan Friesse. All Rights Reserved.
+ * Copyright (c) 2008-2018 Jan Friesse. All Rights Reserved.
  * Written by Jan Friesse, <jfriesse@gmail.comt>
  * Creation date: Sun Mar 16 2008
  *
@@ -29,9 +29,9 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *
- * Except as contained in this notice, the name of Jan Friesse shall not be 
- * used in advertising or otherwise to promote the sale, use or other dealings in 
- * this Software without prior written authorization from Jan Friesse. 
+ * Except as contained in this notice, the name of Jan Friesse shall not be
+ * used in advertising or otherwise to promote the sale, use or other dealings in
+ * this Software without prior written authorization from Jan Friesse.
  */
 
 #ifndef __GLUT__
