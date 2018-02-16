@@ -290,7 +290,6 @@ unsigned char *glutReadImageFile(const char *file_name, GLsizei *width, GLsizei 
 	__gtkglut_test_inicialization("glutReadImageFile");
 	GdkPixbuf *pixbuf;
 	int no_channels;
-	int rowstride;
 	unsigned char *res;
 
 	pixbuf = gdk_pixbuf_new_from_file(file_name, NULL);
@@ -323,8 +322,6 @@ unsigned char *glutReadImageFile(const char *file_name, GLsizei *width, GLsizei 
 		return NULL;
 	}
 
-	rowstride = gdk_pixbuf_get_rowstride(pixbuf);
-
 	res = (unsigned char *)malloc((*width) * (*height) * no_channels);
 
 	if (!res)
@@ -332,7 +329,7 @@ unsigned char *glutReadImageFile(const char *file_name, GLsizei *width, GLsizei 
 
 	memcpy(res, gdk_pixbuf_get_pixels(pixbuf), (*width) * (*height) * no_channels);
 
-	gdk_pixbuf_unref(pixbuf);
+	g_object_unref(pixbuf);
 
 	return res;
 }

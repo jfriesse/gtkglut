@@ -91,10 +91,7 @@ GtkWidget *__gtkglut_create_drawing_area(char *func_name)
 void __gtkglut_test_direct_rendering(char *func_name, GtkWidget * drawing_area)
 {
 	gboolean is_direct;
-	gboolean direct_render;
 
-	direct_render =
-	    (__gtkglut_context->direct_render == __GTKGLUT_DIRECT_RENDER_INDIRECT) ? FALSE : TRUE;
 	is_direct = gdk_gl_context_is_direct(gtk_widget_get_gl_context(drawing_area));
 
 	if (!is_direct && __gtkglut_context->direct_render == __GTKGLUT_DIRECT_RENDER_NOT_SET) {

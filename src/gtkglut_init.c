@@ -582,14 +582,12 @@ void glutInitDisplayString(char *string)
 {
 	int glut_state_flag = 0;
 	char *token;
-	int len;
 	char *buffer;
 	unsigned int i;
 
 	if (!string)
 		return;
 
-	len = strlen(string);
 	buffer = g_strdup(string);
 
 	token = strtok(buffer, " \t");
